@@ -9,7 +9,7 @@ module.exports = {
     es2021: true,
     // jest: true
   },
-  // plugins: ['prettier'], // typescript를 쓸거라면 '@typescript-eslint', ESLint에는 기본으로 제공되는 규칙(rule) 외에도 추가적인 규칙(rule)을 사용할 수 있도록 만들어준다.
+  plugins: ['prettier'], // typescript를 쓸거라면 '@typescript-eslint', ESLint에는 기본으로 제공되는 규칙(rule) 외에도 추가적인 규칙(rule)을 사용할 수 있도록 만들어준다.
   // ESLint 설정을 확장할 때 사용한다. prettier, airbnb, google 등 다른 사용자의 설정을 불러올 수 있다.
   // 해당 프로젝트에서는 대표적인 airbnb 규칙을 적용하기에는 엄격하다 느껴지며, 구현하는데 시간이 오래 걸릴 것을 우려하여 eslint 권장 규칙들을 적용합니다.
   extends: 'eslint:recommended', // ESLint에서 권장하는 규칙들이 적용된 eslint:recommended으로 설정 (규칙 참고: https://eslint.org/docs/latest/rules/)
