@@ -15,7 +15,7 @@ module.exports = {
   extends: 'eslint:recommended', // ESLint에서 권장하는 규칙들이 적용된 eslint:recommended으로 설정 (규칙 참고: https://eslint.org/docs/latest/rules/)
   overrides: [], // overrides: 프로젝트 내에서 일부 파일에 대해서만 다른 설정을 적용해줘야 할 때 사용
   // parserOptions: ESLint는 기본적으로 순수한 자바스크립트 코드만 이해할 수 있기 때문에 자바스크립트의 확장 문법이나 최신 문법으로 작성한 코드를 린트(lint)하기 위해서는 그에 상응하는 파서(parser)를 사용하도록 설정해줘야
-  // eslint를 사용하기 위해 지원하는 언어를 설정, 버전과 모듈 사용 여부
+  // eslint를 사용하기 위해 지원하는 언어를 설정(버전과 모듈 사용 여부)
   parserOptions: {
     ecmaVersion: 'latest', // ECMA version으로 최신 버전을 파싱한다. (참고: https://www.daleseo.com/eslint-config/)
   },
