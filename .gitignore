@@ -1,0 +1,12 @@
+### Node ###
+# Dependency directories
+node_modules/
+
+# dotenv environment variable files
+.env
+
+# Serverless directories
+.serverless
+
+# misc
+.DS_Store
