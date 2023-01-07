@@ -38,6 +38,7 @@ app.use(
 );
 
 app.use('/', indexRouter);
+app.use('/userImage', express.static('public'));
 
 app.listen(port, () => {
   console.log(port, 'port start');
