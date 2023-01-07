@@ -22,10 +22,6 @@ class SignupController {
       });
     }
   };
-
-  login = async () => {
-    // todo
-  };
 }
 
 module.exports = SignupController;
