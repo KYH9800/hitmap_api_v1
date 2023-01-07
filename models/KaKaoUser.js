@@ -16,21 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      created_at: {
+      createdAt: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defalutValue: DataTypes.NOW,
+        field: 'created_at',
       },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defalutValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {
       sequelize,
       modelName: 'KaKaoUser',
-      timestamps: false,
+      timestamps: true,
     },
   );
 
