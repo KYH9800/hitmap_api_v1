@@ -1,5 +1,5 @@
 class PostRepository {
-  constructor(PostModel){
+  constructor(PostModel) {
     this.postModel = PostModel;
   }
 
@@ -8,7 +8,7 @@ class PostRepository {
       user_id,
       content,
     });
-    
+
     return createPost;
   };
 }

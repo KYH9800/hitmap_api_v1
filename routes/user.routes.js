@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const UserController = require('../controllers/user.controller');
-const userController = new UserController();
+const SignupController = require('../controllers/signup.controller');
+const signupController = new SignupController();
 
-// 회원가입
-router.post('/signup', userController.signup);
+const LoginController = require('../controllers/login.controller');
+const loginController = new LoginController();
 
-// 로그인
-router.post('/login', userController.login);
+const upload = require('../multer/awsMulterModules');
+
+router
+  .post('/signup', upload.single('image'), signupController.signup) // 회원가입
+  .post('/login', loginController.login); // 로그인
 
 module.exports = router;
