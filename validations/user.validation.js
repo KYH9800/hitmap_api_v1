@@ -55,7 +55,7 @@ exports.loginSchema = Joi.object().keys({
     }),
 });
 
-// 중복확인 검증
+// email 중복확인 검증
 exports.aleadyEmailSchema = Joi.object().keys({
   email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
@@ -64,4 +64,13 @@ exports.aleadyEmailSchema = Joi.object().keys({
       'string.pattern.base': '이메일 형식이 바르지 않습니다.',
       'any.required': '이메일이 입력되지 않았습니다.',
     }),
+});
+
+// nickname 중복확인 검증
+exports.aleadyNicknameSchema = Joi.object().keys({
+  nickname: Joi.string().pattern(new RegExp('^[a-zA-Z0-9가-힇]{2,15}$')).min(2).required().messages({
+    'string.pattern.base': '닉네임은 영어/한글 + 숫자 조합이어야 합니다.',
+    'string.min': 'PW BELOW STRING LENGTH 2',
+    'string.required': 'NO NICKNAME INPUT',
+  }),
 });

@@ -17,6 +17,7 @@ router
   .post('/signup', auth.isNotLoggedIn, upload.single('image'), signupController.signup) // 회원가입
   .post('/login', auth.isNotLoggedIn, loginController.login) // 로그인
   .post('/logout', auth.isLoggedIn, loginController.logout) // 로그아웃
-  .get('/email', checkController.findByEmail); // 이메일 중복확인
+  .get('/email', checkController.findByEmail) // 이메일 중복확인
+  .get('/nickname', checkController.findByNickname); // 닉네임 중복확인
 
 module.exports = router;
