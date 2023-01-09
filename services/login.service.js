@@ -22,18 +22,29 @@ const user_login = async (email, password) => {
     throw new CustomError('이메일 또는 비밀번호를 확인해주세요.', 412);
   }
 
-  const token = jwt.sign(
+  const access_token = jwt.sign(
     {
       user_id: user.user_id,
     },
     process.env.JWT_SECRET_KEY,
     {
-      expiresIn: '3h',
+      expiresIn: '10s',
+    },
+  );
+
+  const refresh_token = jwt.sign(
+    {
+      user_id: user.user_id,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: '7d',
     },
   );
 
   return {
-    token: token,
+    access_token: access_token,
+    refresh_token: refresh_token,
     nickname: user.nickname,
   };
 };
