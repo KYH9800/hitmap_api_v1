@@ -7,11 +7,6 @@ class SignupRepository {
   }
   // TODO: 받아온 정보 DB에 저장만 하면됨
   signup = async (email, password, nickname, image) => {
-    console.log('email: ', email);
-    console.log('password: ', password);
-    console.log('nickname: ', nickname);
-    console.log('image: ', image);
-
     const aleadyUser = await this.userModel.findOne({
       where: {
         email: email,
@@ -42,7 +37,12 @@ class SignupRepository {
       src: image,
     });
 
-    return { user, userProfileImage };
+    return {
+      user_id: user.user_id,
+      email: user.email,
+      nickname: user.nickname,
+      profile_image: userProfileImage.src,
+    };
   };
 }
 
