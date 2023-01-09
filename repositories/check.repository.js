@@ -11,6 +11,16 @@ class CheckRepository {
 
     return aleady_user_email;
   };
+
+  findByNickname = async (nickname) => {
+    const aleady_user_nickname = await this.userModel.findOne({
+      where: {
+        nickname: nickname,
+      },
+    });
+
+    return aleady_user_nickname;
+  };
 }
 
 module.exports = CheckRepository;

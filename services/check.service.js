@@ -7,7 +7,6 @@ const checkRepository = new CheckRepository(User);
 
 const check_user_email = async (email) => {
   const aleady_user_email = await checkRepository.findByEmail(email);
-  console.log('service aleady_user_email: ', aleady_user_email);
 
   if (aleady_user_email) {
     throw new CustomError('이미 사용중인 이메일 입니다.', 401);
@@ -16,6 +15,18 @@ const check_user_email = async (email) => {
   return aleady_user_email;
 };
 
+const check_user_nickname = async (nickname) => {
+  const aleady_user_nickname = await checkRepository.findByNickname(nickname);
+  console.log('service aleady_user_nickname: ', aleady_user_nickname);
+
+  if (aleady_user_nickname) {
+    throw new CustomError('이미 사용중인 닉네임 입니다.', 401);
+  }
+
+  return aleady_user_nickname;
+};
+
 module.exports = {
   check_user_email,
+  check_user_nickname,
 };
