@@ -55,7 +55,7 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
         },
         process.env.JWT_SECRET_KEY,
         {
-          expiresIn: '3s',
+          expiresIn: '1h',
         },
       );
       res.locals.user = refresh_token_invalid.user_id;
