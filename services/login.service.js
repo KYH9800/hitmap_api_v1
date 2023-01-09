@@ -38,7 +38,7 @@ const user_login = async (email, password) => {
     },
     process.env.JWT_SECRET_KEY,
     {
-      expiresIn: '7d',
+      expiresIn: '1d',
     },
   );
 
