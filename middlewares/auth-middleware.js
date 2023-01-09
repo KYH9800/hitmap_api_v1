@@ -17,10 +17,8 @@ function validateRefreshToken(refreshToken) {
 
 // Access Token의 Payload
 function getAccessTokenPayload(access_token) {
-  console.log('access_token: ', access_token);
   try {
     const payload = jwt.verify(access_token, process.env.JWT_SECRET_KEY);
-    console.log('payload: ', payload);
     return payload;
   } catch (error) {
     console.log(error);
@@ -37,10 +35,8 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
     if (!access_token) throw new CustomError('로그인된 사용자만 접근이 가능합니다.', 403);
 
     const access_token_invalid = getAccessTokenPayload(access_token);
-    console.log('access_token_invalid: ', access_token_invalid);
-
     const refresh_token_invalid = validateRefreshToken(refresh_token);
-    console.log('refresh_token_invalid: ', refresh_token_invalid);
+
     if (!refresh_token_invalid) {
       res.clearCookie('access_token');
       res.clearCookie('refresh_token');
@@ -48,7 +44,6 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
     }
 
     if (!access_token_invalid) {
-      console.log('만료됐으면');
       const refresh_token_invalid = validateRefreshToken(refresh_token);
 
       if (!refresh_token_invalid) {
@@ -74,7 +69,6 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
       res.cookie('access_token', new_access_token);
       throw new CustomError('access-token이 만료되어 재발급합니다.', 419);
     } else {
-      console.log('else');
       const user_information = await User.findOne({
         where: {
           user_id: access_token_invalid.user_id,
@@ -102,7 +96,6 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
 const isLoggedIn = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
-    console.log('access_token: ', access_token);
 
     if (!access_token) {
       throw new CustomError('로그인된 사용자만 접근이 가능합니다.', 403);
@@ -127,7 +120,6 @@ const isLoggedIn = async (req, res, next) => {
 const isNotLoggedIn = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
-    console.log('access_token: ', access_token);
     if (access_token) throw new CustomError('이미 로그인된 사용자입니다.', 403);
 
     next();
