@@ -1,13 +1,12 @@
-const { get_my_info, update_user_info } = require('../services/userInfo.service');
+const { get_my_info, update_user_info, get_my_posts } = require('../services/userInfo.service');
 
 class UserInfoController {
   // 내 정보 조회
   getMyInfo = async (req, res) => {
     try {
-      const { user_id } = res.locals;
+      const user_id = res.locals.user;
 
       const user_info = await get_my_info(user_id);
-      console.log('user_info: ', user_info);
 
       return res.status(200).send({
         user_id: user_info.user_id,
@@ -32,8 +31,7 @@ class UserInfoController {
   // 내 정보 수정
   updateUserInfo = async (req, res) => {
     try {
-      const { user_id } = res.locals;
-      // const user_id = 17;
+      const user_id = res.locals.user;
       const image = req.file?.location;
       const { prevPassword, password, passwordConfirm, nickname } = req.body;
 
@@ -52,6 +50,50 @@ class UserInfoController {
       }
       return res.status(400).send({
         errorMessage: '회원정보 수정에 실패하였습니다.',
+      });
+    }
+  };
+
+  // 내 게시글 조회
+  getMyPosts = async (req, res) => {
+    try {
+      const user_id = res.locals.user;
+
+      const my_posts = await get_my_posts(user_id);
+
+      return res.status(200).send({
+        user_id: my_posts.user_id,
+        nickname: my_posts.nickname,
+        Posts: my_posts.Posts,
+      });
+    } catch (error) {
+      console.log(error);
+      if (error.message) {
+        return res.status(error.statusCode).send({
+          errorMessage: error.message,
+          status: error.statusCode,
+        });
+      }
+      return res.status(400).send({
+        errorMessage: '게시글 조회에 실패했습니다.',
+      });
+    }
+  };
+
+  // 회원탈퇴
+  deleteUserAllInfo = async (req, res) => {
+    try {
+      // todo
+    } catch (error) {
+      console.log(error);
+      if (error.message) {
+        return res.status(error.statusCode).send({
+          errorMessage: error.message,
+          status: error.statusCode,
+        });
+      }
+      return res.status(400).send({
+        errorMessage: '회원탈퇴에 실패 하였습니다.',
       });
     }
   };
