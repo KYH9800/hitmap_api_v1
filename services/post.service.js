@@ -1,8 +1,8 @@
 const PostRepository = require('../repositories/post.repository');
 
-const { Post, PostImage, FishInfo } = require('../models');
+const { Post, PostImage, FishInfo, Like } = require('../models');
 
-const postRepository = new PostRepository(Post, PostImage, FishInfo);
+const postRepository = new PostRepository(Post, PostImage, FishInfo, Like);
 
 const create_post = async (user_id, content, fishName, src) => {
   if (!user_id) {
@@ -30,13 +30,29 @@ const create_post = async (user_id, content, fishName, src) => {
 const find_all_post = async () => {
   const posts = await postRepository.findAllPosts();
 
-  return posts;
+  return posts.map((post) => {
+    return {
+      post_id: post.post_id,
+      user_id: post.user_id,
+      content: post.content,
+      like_count: post.Likes.length,
+      fishName: post.FishInfos[0].fish_name,
+      PostImage: post.PostImages,
+    };
+  });
 };
 
 const find_post = async (post_id) => {
-  const post = await postRepository.findPost(post_id);
+  const detailPost = await postRepository.findPost(post_id);
 
-  return post;
+    return {
+      post_id: detailPost.post_id,
+      user_id: detailPost.user_id,
+      content: detailPost.content,
+      like_count: detailPost.Likes.length,
+      fishName: detailPost.FishInfos[0].fish_name,
+      PostImage: detailPost.PostImages,
+    };
 };
 
 const delete_post = async (user_id, post_id) => {
@@ -70,10 +86,21 @@ const update_post = async (user_id, post_id, content, fish_name) => {
   return updatePost;
 };
 
+const like_post = async (user_id, post_id) => {
+  if (!user_id) {
+    throw { errorMessage: '로그인된 사용자만 접근이 가능합니다', code: 403 };
+  }
+
+  const likePost = await postRepository.likePost(user_id, post_id);
+
+  return likePost;
+};
+
 module.exports = {
   create_post,
   find_all_post,
   find_post,
   delete_post,
   update_post,
+  like_post,
 };

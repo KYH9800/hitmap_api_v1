@@ -1,4 +1,11 @@
-const { create_post, find_all_post, find_post, delete_post, update_post } = require('../services/post.service');
+const {
+  create_post,
+  find_all_post,
+  find_post,
+  delete_post,
+  update_post,
+  like_post,
+} = require('../services/post.service');
 
 class PostController {
   createPost = async (req, res) => {
@@ -81,6 +88,23 @@ class PostController {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
         return res.status(400).json({ errorMessage: '게시글 수정에 실패하였습니다.' });
+      }
+    }
+  };
+
+  likePost = async (req, res) => {
+    try {
+      const user_id = 2;
+      const { postId } = req.params;
+
+      const likePost = await like_post(user_id, postId);
+
+      res.status(200).json({ likePost });
+    } catch (error) {
+      if (error.code) {
+        return res.status(error.code).json({ errorMessage: error.errorMessage });
+      } else {
+        return res.status(400).json({ errorMessage: '게시글 좋아요에 실패하였습니다.' });
       }
     }
   };

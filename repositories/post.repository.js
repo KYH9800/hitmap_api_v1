@@ -1,8 +1,11 @@
+const Sequelize = require('sequelize');
+const { sequelize } = require('../models');
 class PostRepository {
-  constructor(PostModel, PostImageModel, FishInfoModel) {
+  constructor(PostModel, PostImageModel, FishInfoModel, LikeModel) {
     this.postModel = PostModel;
     this.postImageModel = PostImageModel;
     this.fishInfoModel = FishInfoModel;
+    this.likeModel = LikeModel;
   }
 
   createPost = async (user_id, content) => {
@@ -33,20 +36,23 @@ class PostRepository {
 
   findAllPosts = async () => {
     const posts = await this.postModel.findAll({
+      attributes: ['post_id', 'user_id', 'content'],
       include: [
         {
           model: this.postImageModel,
           attributes: ['src'],
         },
-
         {
           model: this.fishInfoModel,
           attributes: ['fish_name'],
         },
+        {
+          model: this.likeModel,
+          attributes: ['post_id'],
+        },
       ],
       order: [['created_at', 'DESC']],
     });
-
     return posts;
   };
 
@@ -58,10 +64,13 @@ class PostRepository {
           model: this.postImageModel,
           attributes: ['src'],
         },
-
         {
           model: this.fishInfoModel,
           attributes: ['fish_name'],
+        },
+        {
+          model: this.likeModel,
+          attributes: ['post_id'],
         },
       ],
     });
@@ -76,7 +85,6 @@ class PostRepository {
   };
 
   updatePost = async (post_id, content) => {
-    console.log(post_id, content);
     const updatePost = await this.postModel.update({ content }, { where: { post_id } });
 
     return updatePost;
@@ -86,6 +94,27 @@ class PostRepository {
     const updateFishInfo = await this.fishInfoModel.update({ fish_name }, { where: { post_id } });
 
     return updateFishInfo;
+  };
+
+  likePost = async (user_id, post_id) => {
+    const isLike = await this.likeModel.findAll({ where: { user_id, post_id } });
+
+    if (!isLike.length) {
+      await this.likeModel.create({ user_id, post_id });
+      return { message: '좋아요' };
+    } else {
+      await this.likeModel.destroy({ where: { user_id, post_id } });
+      return { message: '좋아요 취소' };
+    }
+  };
+
+  countLike = async (post_id) => {
+    const likes = await this.likeModel.findAll({
+      where: { post_id },
+      attributes: [[Sequelize.fn('COUNT', sequelize.col('like_id')), 'Likes']],
+    });
+
+    return likes[0];
   };
 }
 

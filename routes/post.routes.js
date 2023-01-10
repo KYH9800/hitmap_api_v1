@@ -8,7 +8,8 @@ const postController = new PostController();
 router.post('/', upload.array('image', 5), postController.createPost);
 router.get('/', postController.findAllPosts);
 router.get('/:postId', postController.findDetailPost);
-router.delete('/:postId', postController.deletePost)
-router.patch('/:postId', postController.updatePost)
+router.delete('/:postId', postController.deletePost);
+router.patch('/:postId', postController.updatePost);
+router.patch('/:postId/like', postController.likePost);
 
 module.exports = router;
