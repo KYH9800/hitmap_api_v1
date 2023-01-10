@@ -23,7 +23,7 @@ const get_my_info = async (user_id) => {
 
 // 내 정보 수정
 const update_user_info = async (user_id, prevPassword, password, passwordConfirm, nickname, image) => {
-  const find_user = await userInfoRepository.findUserPassword(user_id);
+  const find_user = await userInfoRepository.findUser(user_id);
   const password_check = await bcrypt.compare(prevPassword, find_user.password);
 
   if (!password_check) {
@@ -49,8 +49,27 @@ const get_my_posts = async (user_id) => {
   return my_posts;
 };
 
+const delete_user_info = async (user_id, password) => {
+  if (!user_id) {
+    throw new CustomError('회원정보가 존재하지 않습니다.', 412);
+  }
+
+  const find_user = await userInfoRepository.findUser(user_id);
+  const password_check = await bcrypt.compare(password, find_user.password);
+
+  if (!password_check) {
+    throw new CustomError('비밀번호가 일치하지 않습니다.', 412);
+  }
+
+  const delete_user = await userInfoRepository.deleteUserInfo(user_id);
+  console.log('delete_user: ', delete_user);
+
+  return delete_user;
+};
+
 module.exports = {
   get_my_info,
   update_user_info,
   get_my_posts,
+  delete_user_info,
 };

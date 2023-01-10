@@ -1,4 +1,4 @@
-const { get_my_info, update_user_info, get_my_posts } = require('../services/userInfo.service');
+const { get_my_info, update_user_info, get_my_posts, delete_user_info } = require('../services/userInfo.service');
 
 class UserInfoController {
   // 내 정보 조회
@@ -83,7 +83,20 @@ class UserInfoController {
   // 회원탈퇴
   deleteUserAllInfo = async (req, res) => {
     try {
-      // todo
+      const user_id = res.locals.user;
+      const { password } = req.body;
+
+      const delete_user = await delete_user_info(user_id, password);
+
+      if (delete_user) {
+        res.clearCookie('access_token');
+        res.clearCookie('refresh_token');
+      }
+
+      return res.status(204).send({
+        message: '회원탈퇴가 정상적으로 이루졌습니다.',
+        result: delete_user,
+      });
     } catch (error) {
       console.log(error);
       if (error.message) {
