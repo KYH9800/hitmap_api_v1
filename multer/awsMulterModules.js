@@ -11,8 +11,8 @@ AWS.config.update({
 
 module.exports = multer({
   storage: multerS3({
-    s3: new AWS.S3(), 
-    bucket: 'kidkyu',
+    s3: new AWS.S3(),
+    bucket: process.env.S3_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
       const filiname = path.basename(file.originalname).trim();
