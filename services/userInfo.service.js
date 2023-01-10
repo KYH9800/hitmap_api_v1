@@ -1,9 +1,9 @@
-const { User, UserImage } = require('../models');
+const { User, UserImage, Post, PostImage } = require('../models');
 
 const { CustomError } = require('../utils/Error');
 
 const UserInfoRepository = require('../repositories/userInfo.repository');
-const userInfoRepository = new UserInfoRepository(User, UserImage);
+const userInfoRepository = new UserInfoRepository(User, UserImage, Post, PostImage);
 
 const bcrypt = require('bcrypt');
 
@@ -38,7 +38,19 @@ const update_user_info = async (user_id, prevPassword, password, passwordConfirm
   await userInfoRepository.updateUserInfo(user_id, hashed_password, nickname, image);
 };
 
+// 내 게시글 조회
+const get_my_posts = async (user_id) => {
+  const my_posts = await userInfoRepository.findMyPosts(user_id);
+
+  if (!my_posts) {
+    throw new CustomError('게시글이 존재하지 않습니다.', 404);
+  }
+
+  return my_posts;
+};
+
 module.exports = {
   get_my_info,
   update_user_info,
+  get_my_posts,
 };
