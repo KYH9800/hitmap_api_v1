@@ -1,13 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const UserController = require('../controllers/user.controller');
-const userController = new UserController();
+const SignupController = require('../controllers/signup.controller');
+const signupController = new SignupController();
 
-// 회원가입
-router.post('/signup', userController.signup);
+const LoginController = require('../controllers/login.controller');
+const loginController = new LoginController();
 
-// 로그인
-router.post('/login', userController.login);
+const CheckController = require('../controllers/check.controller');
+const checkController = new CheckController();
+
+const upload = require('../multer/awsMulterModules');
+const auth = require('../middlewares/auth-middleware');
+
+router
+  .post('/signup', auth.isNotLoggedIn, upload.single('image'), signupController.signup) // 회원가입
+  .post('/login', auth.isNotLoggedIn, loginController.login) // 로그인
+  .post('/logout', auth.isLoggedIn, loginController.logout) // 로그아웃
+  .get('/email', auth.isNotLoggedIn, checkController.findByEmail) // 이메일 중복확인
+  .get('/nickname', auth.isNotLoggedIn, checkController.findByNickname); // 닉네임 중복확인
 
 module.exports = router;

@@ -5,6 +5,10 @@ const router = express.Router();
 const userRouter = require('./user.routes');
 router.use('/user', userRouter);
 
+// 고윤혁
+const userInfoRouter = require('./userInfo.routes');
+router.use('/me', userInfoRouter);
+
 // 이규형
 const postRouter = require('./post.routes');
 router.use('/post', postRouter);

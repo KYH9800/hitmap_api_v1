@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const { sequelize } = require('../models');
+
 class PostRepository {
   constructor(PostModel, PostImageModel, FishInfoModel, LikeModel) {
     this.postModel = PostModel;

@@ -15,7 +15,6 @@ module.exports = multer({
     bucket: 'kidkyu',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
-
       const filiname = path.basename(file.originalname).trim();
       let newFilename = '';
       for (let value of filiname) {
@@ -28,5 +27,5 @@ module.exports = multer({
       cb(null, `original/${Date.now()}_${newFilename}`);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, 
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
