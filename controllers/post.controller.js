@@ -10,7 +10,7 @@ const {
 class PostController {
   createPost = async (req, res) => {
     try {
-      const user_id = 1;
+      const user_id = res.locals.user;
       const { content, fishName } = req.body;
       const src = req.files;
 
@@ -59,7 +59,7 @@ class PostController {
 
   deletePost = async (req, res) => {
     try {
-      const user_id = 1;
+      const user_id = res.locals.user;
       const { postId } = req.params;
 
       await delete_post(user_id, postId);
@@ -76,7 +76,7 @@ class PostController {
 
   updatePost = async (req, res) => {
     try {
-      const user_id = 1;
+      const user_id = res.locals.user;
       const { postId } = req.params;
       const { content, fishName } = req.body;
 
@@ -94,7 +94,7 @@ class PostController {
 
   likePost = async (req, res) => {
     try {
-      const user_id = 2;
+      const user_id = res.locals.user;
       const { postId } = req.params;
 
       const likePost = await like_post(user_id, postId);
