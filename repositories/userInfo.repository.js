@@ -25,8 +25,8 @@ class UserInfoRepository {
     return userInfo;
   };
 
-  // 내 정보 수정: User 찾기(비밀번호 확인)
-  findUserPassword = async (user_id) => {
+  // 내 정보 찾기
+  findUser = async (user_id) => {
     const find_user = await this.userModel.findOne({
       where: {
         user_id: user_id,
@@ -90,6 +90,18 @@ class UserInfoRepository {
       nickname: find_user.nickname,
       Posts: all_my_posts,
     };
+  };
+
+  // 회원탈퇴
+  deleteUserInfo = async (user_id) => {
+    console.log('user_id: ', user_id);
+    const delete_user = await this.userModel.destroy({
+      where: {
+        user_id: user_id,
+      },
+    });
+
+    return delete_user;
   };
 }
 
