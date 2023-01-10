@@ -32,8 +32,8 @@ class UserInfoController {
   // 내 정보 수정
   updateUserInfo = async (req, res) => {
     try {
-      // const { user_id } = res.locals;
-      const user_id = 17;
+      const { user_id } = res.locals;
+      // const user_id = 17;
       const image = req.file?.location;
       const { prevPassword, password, passwordConfirm, nickname } = req.body;
 
