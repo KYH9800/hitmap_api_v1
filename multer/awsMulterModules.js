@@ -2,7 +2,6 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const path = require('path');
-console.log('path: ', path);
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -12,8 +11,8 @@ AWS.config.update({
 
 module.exports = multer({
   storage: multerS3({
-    s3: new AWS.S3(),
-    bucket: 'kyh-my-bucket',
+    s3: new AWS.S3(), 
+    bucket: 'kidkyu',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
       const filiname = path.basename(file.originalname).trim();
