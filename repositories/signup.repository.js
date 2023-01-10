@@ -35,6 +35,7 @@ class SignupRepository {
 
     const userProfileImage = await this.userImageModel.create({
       src: image,
+      user_id: user.user_id,
     });
 
     return {
