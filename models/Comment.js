@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      fish_name: {
+      content: {
         type: DataTypes.STRING,
         allowNull: false,
       },
