@@ -9,6 +9,10 @@ router.use('/user', userRouter);
 const userInfoRouter = require('./userInfo.routes');
 router.use('/me', userInfoRouter);
 
+// 고윤혁
+const weatherRouter = require('./weatherAPI.routes');
+router.use('/weather', weatherRouter);
+
 // 이규형
 const postRouter = require('./post.routes');
 router.use('/post', postRouter);
