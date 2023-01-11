@@ -19,6 +19,6 @@ router.use('/post', postRouter);
 
 // 이규형
 const commentRouter = require('./comment.routes');
-router.use('/post', commentRouter);
+router.use('/comment', commentRouter);
 
 module.exports = router;

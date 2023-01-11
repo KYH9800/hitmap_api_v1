@@ -1,8 +1,10 @@
 const PostRepository = require('../repositories/post.repository');
+const CommentRepository = require('../repositories/comment.repository');
 
-const { Post, PostImage, FishInfo, Like } = require('../models');
+const { Post, PostImage, FishInfo, Comment, Like } = require('../models');
 
-const postRepository = new PostRepository(Post, PostImage, FishInfo, Like);
+const postRepository = new PostRepository(Post, PostImage, FishInfo, Comment, Like);
+const commentRepository = new CommentRepository(Comment);
 
 const create_post = async (user_id, content, fishName, src) => {
   if (!user_id) {
@@ -35,6 +37,7 @@ const find_all_post = async () => {
       post_id: post.post_id,
       user_id: post.user_id,
       content: post.content,
+      comment_count: post.Comments.length,
       like_count: post.Likes.length,
       fishName: post.FishInfos[0].fish_name,
       PostImage: post.PostImages,
@@ -44,21 +47,26 @@ const find_all_post = async () => {
 
 const find_post = async (post_id) => {
   const detailPost = await postRepository.findPost(post_id);
-
+  const comments = await commentRepository.findComments(post_id);
+  comments.map((comment) => {
     return {
-      post_id: detailPost.post_id,
-      user_id: detailPost.user_id,
-      content: detailPost.content,
-      like_count: detailPost.Likes.length,
-      fishName: detailPost.FishInfos[0].fish_name,
-      PostImage: detailPost.PostImages,
+      comments: comment.content,
     };
+  });
+
+  return {
+    post_id: detailPost.post_id,
+    user_id: detailPost.user_id,
+    content: detailPost.content,
+    like_count: detailPost.Likes.length,
+    fishName: detailPost.FishInfos[0].fish_name,
+    comments: comments,
+    PostImage: detailPost.PostImages,
+  };
 };
 
 const delete_post = async (user_id, post_id) => {
   const post = await postRepository.findPost(post_id);
-
-  const deletedPost = await postRepository.deletePost(post_id);
 
   if (!user_id) {
     throw { errorMessage: '로그인된 사용자만 접근이 가능합니다', code: 403 };
@@ -67,14 +75,13 @@ const delete_post = async (user_id, post_id) => {
     throw { errorMessage: '본인이 작성한 게시글만 삭제가 가능합니다.', code: 401 };
   }
 
+  const deletedPost = await postRepository.deletePost(post_id);
+
   return deletedPost;
 };
 
 const update_post = async (user_id, post_id, content, fish_name) => {
   const post = await postRepository.findPost(post_id);
-
-  const updatePost = await postRepository.updatePost(post_id, content);
-  await postRepository.updateFishInfo(post_id, fish_name);
 
   if (!user_id) {
     throw { errorMessage: '로그인된 사용자만 접근이 가능합니다', code: 403 };
@@ -82,6 +89,9 @@ const update_post = async (user_id, post_id, content, fish_name) => {
   if (user_id !== post.user_id) {
     throw { errorMessage: '본인이 작성한 게시글만 수정이 가능합니다.', code: 401 };
   }
+
+  const updatePost = await postRepository.updatePost(post_id, content);
+  await postRepository.updateFishInfo(post_id, fish_name);
 
   return updatePost;
 };

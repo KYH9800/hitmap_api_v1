@@ -2,10 +2,11 @@ const Sequelize = require('sequelize');
 const { sequelize } = require('../models');
 
 class PostRepository {
-  constructor(PostModel, PostImageModel, FishInfoModel, LikeModel) {
+  constructor(PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
     this.postModel = PostModel;
     this.postImageModel = PostImageModel;
     this.fishInfoModel = FishInfoModel;
+    this.commentModel = CommentModel;
     this.likeModel = LikeModel;
   }
 
@@ -46,6 +47,10 @@ class PostRepository {
         {
           model: this.fishInfoModel,
           attributes: ['fish_name'],
+        },
+        {
+          model: this.commentModel,
+          attributes: ['content'],
         },
         {
           model: this.likeModel,
