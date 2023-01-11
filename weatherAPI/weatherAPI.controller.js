@@ -13,7 +13,12 @@ const get_weather_api = async (req, res) => {
 
     return res.status(200).send({
       message: '날씨 정보 검색 완료',
-      data: open_weather,
+      lon: open_weather.coord.lon,
+      lat: open_weather.coord.lat,
+      description: open_weather.weather.description,
+      temp: open_weather.main.temp,
+      wind_speed: open_weather.wind.speed,
+      wind_deg: open_weather.wind.deg,
     });
   } catch (error) {
     console.log(error);
