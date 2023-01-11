@@ -30,19 +30,24 @@ const create_post = async (user_id, content, fishName, src) => {
 };
 
 const find_all_post = async () => {
-  const posts = await postRepository.findAllPosts();
+  try {
+    const posts = await postRepository.findAllPosts();
+    console.log('posts: ', posts);
 
-  return posts.map((post) => {
-    return {
-      post_id: post.post_id,
-      user_id: post.user_id,
-      content: post.content,
-      comment_count: post.Comments.length,
-      like_count: post.Likes.length,
-      fishName: post.FishInfos[0].fish_name,
-      PostImage: post.PostImages,
-    };
-  });
+    return posts.map((post) => {
+      return {
+        post_id: post.post_id,
+        user_id: post.user_id,
+        content: post.content,
+        comment_count: post.Comments.length,
+        like_count: post.Likes.length,
+        fishName: post.FishInfos[0].fish_name,
+        PostImage: post.PostImages,
+      };
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const find_post = async (post_id) => {
