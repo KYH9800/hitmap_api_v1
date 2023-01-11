@@ -20,8 +20,8 @@ const get_weather = async (lat, lon) => {
 
 // 바다누리: 만조, 간조, 파고
 const get_badanuri_api = async (lat, lon) => {
-  console.log('get_badanuri_api 위도: ', lat);
-  console.log('get_badanuri_api 경도: ', lon);
+  console.log('바다누리 위도: ', lat);
+  console.log('바다누리 경도: ', lon);
 };
 
 module.exports = {
