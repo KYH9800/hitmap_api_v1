@@ -8,7 +8,6 @@ class UserInfoRepository {
 
   // 내 정보 조회
   findByUserId = async (user_id) => {
-    console.log('user_id: ', user_id);
     const userInfo = await this.userModel.findOne({
       where: {
         user_id: user_id,
@@ -94,7 +93,6 @@ class UserInfoRepository {
 
   // 회원탈퇴
   deleteUserInfo = async (user_id) => {
-    console.log('user_id: ', user_id);
     const delete_user = await this.userModel.destroy({
       where: {
         user_id: user_id,

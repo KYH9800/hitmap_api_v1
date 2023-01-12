@@ -1,10 +1,8 @@
 const PostRepository = require('../repositories/post.repository');
-const CommentRepository = require('../repositories/comment.repository');
 
-const { Post, PostImage, FishInfo, Comment, Like } = require('../models');
+const { User, UserImage, Post, PostImage, FishInfo, Comment, Like } = require('../models');
 
-const postRepository = new PostRepository(Post, PostImage, FishInfo, Comment, Like);
-const commentRepository = new CommentRepository(Comment);
+const postRepository = new PostRepository(User, UserImage, Post, PostImage, FishInfo, Comment, Like);
 
 const create_post = async (user_id, content, fishName, src) => {
   if (!user_id) {
@@ -29,20 +27,22 @@ const create_post = async (user_id, content, fishName, src) => {
   return createPost, createPostImages, createFishInfo;
 };
 
-const find_all_post = async () => {
+const find_all_posts = async () => {
   try {
     const posts = await postRepository.findAllPosts();
-    console.log('posts: ', posts);
 
     return posts.map((post) => {
       return {
         post_id: post.post_id,
-        user_id: post.user_id,
-        content: post.content,
-        comment_count: post.Comments.length,
-        like_count: post.Likes.length,
-        fishName: post.FishInfos[0].fish_name,
         PostImage: post.PostImages,
+        content: post.content,
+        fishName: post.FishInfos[0].fish_name,
+        like_count: post.Likes.length,
+        comment_count: post.Comments.length,
+        user_id: post.user_id,
+        user_image: post.User.UserImage.src,
+        nickname: post.User.nickname,
+        created_at: post.createdAt,
       };
     });
   } catch (error) {
@@ -52,21 +52,26 @@ const find_all_post = async () => {
 
 const find_post = async (post_id) => {
   const detailPost = await postRepository.findPost(post_id);
-  const comments = await commentRepository.findComments(post_id);
-  comments.map((comment) => {
+
+  const commentInfo = detailPost.Comments.map((comment) => {
     return {
-      comments: comment.content,
+      user_image: comment.User.UserImage.src,
+      nickname: comment.User.nickname,
+      comment: comment.content,
     };
   });
 
   return {
     post_id: detailPost.post_id,
-    user_id: detailPost.user_id,
-    content: detailPost.content,
-    like_count: detailPost.Likes.length,
-    fishName: detailPost.FishInfos[0].fish_name,
-    comments: comments,
     PostImage: detailPost.PostImages,
+    content: detailPost.content,
+    fishName: detailPost.FishInfos[0].fish_name,
+    like_count: detailPost.Likes.length,
+    created_at: detailPost.createdAt,
+    user_id: detailPost.user_id,
+    user_image: detailPost.User.UserImage.src,
+    nickname: detailPost.User.nickname,
+    comments: commentInfo,
   };
 };
 
@@ -113,9 +118,12 @@ const like_post = async (user_id, post_id) => {
 
 module.exports = {
   create_post,
-  find_all_post,
+  find_all_posts,
   find_post,
   delete_post,
   update_post,
   like_post,
 };
+
+//전체 게시글 조회 : 작성자 닉네임, 작성자 프로필이미지, 생성 날짜,
+//게시글 상세조회 : 프로필 이미지, 닉네임
