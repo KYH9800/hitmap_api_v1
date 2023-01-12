@@ -96,6 +96,23 @@ class PostRepository {
           attributes: ['fish_name'],
         },
         {
+          model: this.commentModel,
+          attributes: ['content'],
+          include: [
+            {
+              model: this.userModel,
+              attributes: ['nickname'],
+              include: [
+                {
+                  model: this.userImageModel,
+                  attributes: ['src'],
+                },
+              ],
+            },
+          ],
+          order: [['created_at', 'DESC']],
+        },
+        {
           model: this.likeModel,
           attributes: ['post_id'],
         },

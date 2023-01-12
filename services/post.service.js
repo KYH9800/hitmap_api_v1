@@ -1,10 +1,8 @@
 const PostRepository = require('../repositories/post.repository');
-const CommentRepository = require('../repositories/comment.repository');
 
 const { User, UserImage, Post, PostImage, FishInfo, Comment, Like } = require('../models');
 
 const postRepository = new PostRepository(User, UserImage, Post, PostImage, FishInfo, Comment, Like);
-const commentRepository = new CommentRepository(Comment);
 
 const create_post = async (user_id, content, fishName, src) => {
   if (!user_id) {
@@ -36,15 +34,15 @@ const find_all_posts = async () => {
     return posts.map((post) => {
       return {
         post_id: post.post_id,
-        user_id: post.user_id,
-        nickname: post.User.nickname,
-        user_image: post.User.UserImage.src,
-        content: post.content,
-        created_at: post.createdAt,
-        comment_count: post.Comments.length,
-        like_count: post.Likes.length,
-        fishName: post.FishInfos[0].fish_name,
         PostImage: post.PostImages,
+        content: post.content,
+        fishName: post.FishInfos[0].fish_name,
+        like_count: post.Likes.length,
+        comment_count: post.Comments.length,
+        user_id: post.user_id,
+        user_image: post.User.UserImage.src,
+        nickname: post.User.nickname,
+        created_at: post.createdAt,
       };
     });
   } catch (error) {
@@ -54,25 +52,26 @@ const find_all_posts = async () => {
 
 const find_post = async (post_id) => {
   const detailPost = await postRepository.findPost(post_id);
-  const comments = await commentRepository.findComments(post_id);
 
-  comments.map((comment) => {
+  const commentInfo = detailPost.Comments.map((comment) => {
     return {
-      comments: comment.content,
+      user_image: comment.User.UserImage.src,
+      nickname: comment.User.nickname,
+      comment: comment.content,
     };
   });
 
   return {
     post_id: detailPost.post_id,
-    user_id: detailPost.user_id,
-    nickname: detailPost.User.nickname,
-    user_image:detailPost.User.UserImage.src,
-    content: detailPost.content,
-    created_at: detailPost.createdAt,
-    like_count: detailPost.Likes.length,
-    fishName: detailPost.FishInfos[0].fish_name,
-    comments: comments,
     PostImage: detailPost.PostImages,
+    content: detailPost.content,
+    fishName: detailPost.FishInfos[0].fish_name,
+    like_count: detailPost.Likes.length,
+    created_at: detailPost.createdAt,
+    user_id: detailPost.user_id,
+    user_image: detailPost.User.UserImage.src,
+    nickname: detailPost.User.nickname,
+    comments: commentInfo,
   };
 };
 
