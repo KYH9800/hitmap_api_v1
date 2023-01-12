@@ -10,6 +10,8 @@ const cors = require('cors');
 const db = require('./models');
 // cookie-parser
 const cookieParser = require('cookie-parser');
+// session
+const session = require('express-session');
 // routes
 const indexRouter = require('./routes');
 
@@ -39,6 +41,18 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: 'none',
+      secure: true,
+    },
+  }),
+); // dotenv
 
 app.use('/', indexRouter);
 app.use('/userImage', express.static('public'));
