@@ -1,9 +1,9 @@
 const PostRepository = require('../repositories/post.repository');
 const CommentRepository = require('../repositories/comment.repository');
 
-const { Post, PostImage, FishInfo, Comment, Like } = require('../models');
+const { User, UserImage, Post, PostImage, FishInfo, Comment, Like } = require('../models');
 
-const postRepository = new PostRepository(Post, PostImage, FishInfo, Comment, Like);
+const postRepository = new PostRepository(User, UserImage, Post, PostImage, FishInfo, Comment, Like);
 const commentRepository = new CommentRepository(Comment);
 
 const create_post = async (user_id, content, fishName, src) => {
@@ -29,16 +29,19 @@ const create_post = async (user_id, content, fishName, src) => {
   return createPost, createPostImages, createFishInfo;
 };
 
-const find_all_post = async () => {
+const find_all_posts = async () => {
   try {
     const posts = await postRepository.findAllPosts();
-    console.log('posts: ', posts);
+    console.log('posts: ', typeof(posts[0].dataValues.created_at));
 
     return posts.map((post) => {
       return {
         post_id: post.post_id,
         user_id: post.user_id,
+        nickname: post.User.nickname,
+        user_image: post.User.UserImage.src,
         content: post.content,
+        created_at: post.createdAt,
         comment_count: post.Comments.length,
         like_count: post.Likes.length,
         fishName: post.FishInfos[0].fish_name,
@@ -53,6 +56,7 @@ const find_all_post = async () => {
 const find_post = async (post_id) => {
   const detailPost = await postRepository.findPost(post_id);
   const comments = await commentRepository.findComments(post_id);
+  console.log(detailPost)
   comments.map((comment) => {
     return {
       comments: comment.content,
@@ -62,7 +66,10 @@ const find_post = async (post_id) => {
   return {
     post_id: detailPost.post_id,
     user_id: detailPost.user_id,
+    nickname: detailPost.User.nickname,
+    user_image:detailPost.User.UserImage.src,
     content: detailPost.content,
+    created_at: detailPost.createdAt,
     like_count: detailPost.Likes.length,
     fishName: detailPost.FishInfos[0].fish_name,
     comments: comments,
@@ -113,9 +120,12 @@ const like_post = async (user_id, post_id) => {
 
 module.exports = {
   create_post,
-  find_all_post,
+  find_all_posts,
   find_post,
   delete_post,
   update_post,
   like_post,
 };
+
+//전체 게시글 조회 : 작성자 닉네임, 작성자 프로필이미지, 생성 날짜,
+//게시글 상세조회 : 프로필 이미지, 닉네임

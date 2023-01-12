@@ -2,7 +2,9 @@ const Sequelize = require('sequelize');
 const { sequelize } = require('../models');
 
 class PostRepository {
-  constructor(PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
+  constructor(UserModel, UserImageModel, PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
+    this.userModel = UserModel;
+    this.userImageModel = UserImageModel;
     this.postModel = PostModel;
     this.postImageModel = PostImageModel;
     this.fishInfoModel = FishInfoModel;
@@ -38,8 +40,17 @@ class PostRepository {
 
   findAllPosts = async () => {
     const posts = await this.postModel.findAll({
-      attributes: ['post_id', 'user_id', 'content'],
       include: [
+        {
+          model: this.userModel,
+          attributes: ['nickname'],
+          include: [
+            {
+              model: this.userImageModel,
+              attributes: ['src'],
+            },
+          ],
+        },
         {
           model: this.postImageModel,
           attributes: ['src'],
@@ -66,6 +77,16 @@ class PostRepository {
     const post = await this.postModel.findOne({
       where: { post_id },
       include: [
+        {
+          model: this.userModel,
+          attributes: ['nickname'],
+          include: [
+            {
+              model: this.userImageModel,
+              attributes: ['src'],
+            },
+          ],
+        },
         {
           model: this.postImageModel,
           attributes: ['src'],

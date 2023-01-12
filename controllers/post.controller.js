@@ -1,6 +1,6 @@
 const {
   create_post,
-  find_all_post,
+  find_all_posts,
   find_post,
   delete_post,
   update_post,
@@ -29,7 +29,7 @@ class PostController {
 
   findAllPosts = async (req, res) => {
     try {
-      const posts = await find_all_post();
+      const posts = await find_all_posts();
 
       res.status(200).json({ posts });
     } catch (error) {
