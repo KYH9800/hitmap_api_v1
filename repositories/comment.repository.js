@@ -21,15 +21,6 @@ class CommentRepository {
     return findComment;
   };
 
-  findComments = async (post_id) => {
-    const findComments = await this.commentModel.findAll({
-      where: { post_id },
-      order: [['created_at', 'DESC']],
-    });
-
-    return findComments;
-  };
-
   updateComment = async (comment_id, content) => {
     const updateComment = await this.commentModel.update({ content }, { where: { comment_id } });
 
