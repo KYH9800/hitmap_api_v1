@@ -55,7 +55,7 @@ const find_all_posts = async () => {
 const find_post = async (post_id) => {
   const detailPost = await postRepository.findPost(post_id);
   const comments = await commentRepository.findComments(post_id);
-  console.log(detailPost)
+
   comments.map((comment) => {
     return {
       comments: comment.content,
