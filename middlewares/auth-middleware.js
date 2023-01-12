@@ -5,7 +5,7 @@ const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 
 // Refresh Token을 검증
-function validateRefreshToken(refreshToken) {
+function validate_refresh_token(refreshToken) {
   try {
     const payload = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
     return payload;
@@ -16,7 +16,7 @@ function validateRefreshToken(refreshToken) {
 }
 
 // Access Token의 Payload
-function getAccessTokenPayload(access_token) {
+function get_access_token_payload(access_token) {
   try {
     const payload = jwt.verify(access_token, process.env.JWT_SECRET_KEY);
     return payload;
@@ -27,15 +27,15 @@ function getAccessTokenPayload(access_token) {
 }
 
 // refresh_token
-const isLoggedIn_refresh_token = async (req, res, next) => {
+const is_logged_in_refresh_token = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
     const refresh_token = req.cookies.refresh_token;
 
     if (!access_token) throw new CustomError('로그인된 사용자만 접근이 가능합니다.', 403);
 
-    const access_token_invalid = getAccessTokenPayload(access_token);
-    const refresh_token_invalid = validateRefreshToken(refresh_token);
+    const access_token_invalid = get_access_token_payload(access_token);
+    const refresh_token_invalid = validate_refresh_token(refresh_token);
 
     if (!refresh_token_invalid) {
       res.clearCookie('access_token');
@@ -44,7 +44,7 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
     }
 
     if (!access_token_invalid) {
-      const refresh_token_invalid = validateRefreshToken(refresh_token);
+      const refresh_token_invalid = validate_refresh_token(refresh_token);
 
       if (!refresh_token_invalid) {
         throw new CustomError('Refresh Token이 만료되었습니다.', 419);
@@ -93,7 +93,7 @@ const isLoggedIn_refresh_token = async (req, res, next) => {
 };
 
 // 로그인이 되지 않은 상태에서 접근을 막음 / 로그아웃
-const isLoggedIn = async (req, res, next) => {
+const is_logged_in = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
 
@@ -117,7 +117,7 @@ const isLoggedIn = async (req, res, next) => {
 };
 
 // 로그인된 상태에서 접근을 막음
-const isNotLoggedIn = async (req, res, next) => {
+const is_not_logged_in = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
     if (access_token) throw new CustomError('이미 로그인된 사용자입니다.', 403);
@@ -138,7 +138,7 @@ const isNotLoggedIn = async (req, res, next) => {
 };
 
 module.exports = {
-  isLoggedIn_refresh_token,
-  isLoggedIn,
-  isNotLoggedIn,
+  is_logged_in_refresh_token,
+  is_logged_in,
+  is_not_logged_in,
 };
