@@ -32,7 +32,6 @@ const create_post = async (user_id, content, fishName, src) => {
 const find_all_posts = async () => {
   try {
     const posts = await postRepository.findAllPosts();
-    console.log('posts: ', typeof(posts[0].dataValues.created_at));
 
     return posts.map((post) => {
       return {
