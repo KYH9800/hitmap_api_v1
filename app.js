@@ -29,30 +29,56 @@ db.sequelize.sync({
 });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('cookie-secret-key'));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
-app.use(morgan('combined'));
+// 배포용
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  // CORS
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    }),
+  );
+} else {
+  // 개발용
+  app.use(morgan('dev'));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    }),
+  );
+}
 
-// CORS
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  }),
-);
-
-app.use(
-  session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      sameSite: 'none',
-      secure: true,
-    },
-  }),
-); // dotenv
+// 배포용
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+  app.use(
+    session({
+      saveUninitialized: false,
+      resave: false,
+      secret: process.env.COOKIE_SECRET,
+      proxy: true,
+      cookie: {
+        // sameSite: 'none',
+        httpOnly: false,
+        secure: true,
+      },
+    }),
+  );
+} else {
+  // 개발용
+  app.use(
+    session({
+      saveUninitialized: false,
+      resave: false,
+      secret: process.env.COOKIE_SECRET,
+    }),
+  );
+}
 
 app.use('/', indexRouter);
 app.use('/userImage', express.static('public'));

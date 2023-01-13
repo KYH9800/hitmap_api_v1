@@ -4,7 +4,8 @@
   "description": "hitmap_server",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "NODE_ENV=production pm2 start app.js"
   },
   "author": "KYH_LKH",
   "license": "ISC",
