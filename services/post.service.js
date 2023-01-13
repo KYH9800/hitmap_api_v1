@@ -67,6 +67,7 @@ const find_post = async (post_id) => {
     content: detailPost.content,
     fishName: detailPost.FishInfos[0].fish_name,
     like_count: detailPost.Likes.length,
+    comment_count: detailPost.Comments.length,
     created_at: detailPost.createdAt,
     user_id: detailPost.user_id,
     user_image: detailPost.User.UserImage.src,
