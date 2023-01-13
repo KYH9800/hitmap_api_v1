@@ -63,10 +63,11 @@ if (process.env.NODE_ENV === 'production') {
       secret: process.env.COOKIE_SECRET,
       proxy: true,
       cookie: {
-        // sameSite: 'none',
-        httpOnly: false,
+        sameSite: 'none',
         secure: true,
+        httpOnly: true,
       },
+      name: 'session-cookie',
     }),
   );
 } else {
