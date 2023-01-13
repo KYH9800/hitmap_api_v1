@@ -7,8 +7,13 @@ class LoginController {
 
       const { access_token, refresh_token, nickname } = await user_login(email, password);
 
-      res.cookie('access_token', access_token, { sameSite: 'none', secure: true });
-      res.cookie('refresh_token', refresh_token, { sameSite: 'none', secure: true });
+      if (process.env.NODE_ENV === 'production') {
+        res.cookie('access_token', access_token, { sameSite: 'None', secure: false });
+        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false });
+      } else {
+        res.cookie('access_token', access_token);
+        res.cookie('refresh_token', refresh_token);
+      }
 
       return res.status(200).send({
         message: '로그인 성공',
