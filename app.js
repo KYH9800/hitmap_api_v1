@@ -63,8 +63,8 @@ if (process.env.NODE_ENV === 'production') {
       secret: process.env.COOKIE_SECRET,
       proxy: true,
       cookie: {
-        sameSite: 'none',
-        secure: true,
+        sameSite: 'None',
+        secure: false,
         httpOnly: true,
       },
       name: 'session-cookie',
