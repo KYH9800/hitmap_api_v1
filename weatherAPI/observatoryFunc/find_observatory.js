@@ -1,4 +1,4 @@
-const { observatoryData } = require('../observatory/observatoryObj');
+const { observatoryData } = require('../observatoryFunc/observatoryObj');
 
 // 오늘 날짜
 const today_func = () => {
