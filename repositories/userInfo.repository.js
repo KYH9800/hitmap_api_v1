@@ -75,7 +75,7 @@ class UserInfoRepository {
       where: {
         user_id: user_id,
       },
-      attributes: ['post_id'],
+      attributes: ['post_id', 'created_at'],
       include: [
         {
           model: this.postImageModel,

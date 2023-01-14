@@ -5,7 +5,7 @@ class SignupRepository {
     this.userModel = UserModel;
     this.userImageModel = UserImageModel;
   }
-  // TODO: 받아온 정보 DB에 저장만 하면됨
+
   signup = async (email, password, nickname, image) => {
     const aleadyUser = await this.userModel.findOne({
       where: {
