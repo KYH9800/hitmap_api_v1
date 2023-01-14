@@ -2,7 +2,7 @@ require('dotenv').config();
 const { CustomError } = require('../../utils/Error');
 const axios = require('axios');
 
-const { today_func, find_observatory } = require('../observatory/find_observatory');
+const { today_func, find_observatory } = require('../observatoryFunc/find_observatory');
 // const { observatorArr } = require('../observatory/observatoryObj');
 
 // open weather: 풍향, 풍속, 기온
