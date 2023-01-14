@@ -18,6 +18,8 @@ const find_observatory = (lat, lon) => {
   console.log('관측소 찾기 경도: ', lon);
   // console.log('observatoryData: ', observatoryData);
 
+  //* - 한 값을 배열 담고 최소값인 데이터를 가진 관측소 정보를 보낸다.
+
   const obs_post_id = observatoryData.map((data) => {
     // 위도, 경도의 오차범위로 obs_post_id를 찾는다.
     // 오차범위의 조건
