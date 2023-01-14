@@ -19,6 +19,8 @@ const get_weather_api = async (req, res) => {
       temp: open_weather.main.temp,
       wind_speed: open_weather.wind.speed,
       wind_deg: open_weather.wind.deg,
+      wave_info: badanuri.data,
+      observatory: badanuri.meta,
     });
   } catch (error) {
     console.log(error);
