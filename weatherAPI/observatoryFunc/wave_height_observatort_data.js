@@ -1,0 +1,156 @@
+const wave_height_observatort_info = [
+  {
+    obs_post_id: 'TW_0088',
+    obs_post_name: '감천항',
+    obs_lat: '35.052',
+    obs_lon: '129.003',
+  },
+  {
+    obs_post_id: 'TW_0089',
+    obs_post_name: '경포대해수욕장',
+    obs_lat: '37.808',
+    obs_lon: '128.931',
+  },
+  {
+    obs_post_id: 'TW_0095',
+    obs_post_name: '고래불해수욕장',
+    obs_lat: '36.58',
+    obs_lon: '129.454',
+  },
+  {
+    obs_post_id: 'DT_0042',
+    obs_post_name: '교본초',
+    obs_lat: '34.704',
+    obs_lon: '128.306',
+  },
+  {
+    obs_post_id: 'TW_0091',
+    obs_post_name: '낙산해수욕장',
+    obs_lat: '38.122',
+    obs_lon: '128.65',
+  },
+  {
+    obs_post_id: 'KG_0025',
+    obs_post_name: '남해동부',
+    obs_lat: '34.222',
+    obs_lon: '128.419',
+  },
+  {
+    obs_post_id: 'TW_0069',
+    obs_post_name: '대천해수욕장',
+    obs_lat: '36.274',
+    obs_lon: '126.457',
+  },
+  {
+    obs_post_id: 'TW_0094',
+    obs_post_name: '망상해수욕장',
+    obs_lat: '37.616',
+    obs_lon: '129.103',
+  },
+  {
+    obs_post_id: 'DT_0041',
+    obs_post_name: '복사초',
+    obs_lat: '34.098',
+    obs_lon: '126.168',
+  },
+  {
+    obs_post_id: 'TW_0079',
+    obs_post_name: '상왕등도',
+    obs_lat: '35.652',
+    obs_lon: '126.194',
+  },
+  {
+    obs_post_id: 'TW_0081',
+    obs_post_name: '생일도',
+    obs_lat: '34.258',
+    obs_lon: '126.96',
+  },
+  {
+    obs_post_id: 'TW_0093',
+    obs_post_name: '속초해수욕장',
+    obs_lat: '38.198',
+    obs_lon: '128.631',
+  },
+  {
+    obs_post_id: 'TW_0090',
+    obs_post_name: '송정해수욕장',
+    obs_lat: '35.164',
+    obs_lon: '129.219',
+  },
+  {
+    obs_post_id: 'IE_0061',
+    obs_post_name: '신안가거초',
+    obs_lat: '33.941',
+    obs_lon: '124.592',
+  },
+  {
+    obs_post_id: 'IE_0062',
+    obs_post_name: '옹진소청초',
+    obs_lat: '37.423',
+    obs_lon: '124.738',
+  },
+  {
+    obs_post_id: 'DT_0039',
+    obs_post_name: '왕돌초',
+    obs_lat: '36.719',
+    obs_lon: '129.732',
+  },
+  {
+    obs_post_id: 'TW_0080',
+    obs_post_name: '우이도',
+    obs_lat: '34.543',
+    obs_lon: '125.802',
+  },
+  {
+    obs_post_id: 'KG_0101',
+    obs_post_name: '울릉도북동',
+    obs_lat: '38.007',
+    obs_lon: '131.552',
+  },
+  {
+    obs_post_id: 'KG_0102',
+    obs_post_name: '울릉도북서',
+    obs_lat: '37.742',
+    obs_lon: '130.601',
+  },
+  {
+    obs_post_id: 'IE_0060',
+    obs_post_name: '이어도',
+    obs_lat: '32.122',
+    obs_lon: '125.182',
+  },
+  {
+    obs_post_id: 'TW_0092',
+    obs_post_name: '임랑해수욕장',
+    obs_lat: '35.302',
+    obs_lon: '129.292',
+  },
+  {
+    obs_post_id: 'KG_0021',
+    obs_post_name: '제주남부',
+    obs_lat: '32.09',
+    obs_lon: '126.965',
+  },
+  {
+    obs_post_id: 'KG_0028',
+    obs_post_name: '제주해협',
+    obs_lat: '33.7',
+    obs_lon: '126.59',
+  },
+  {
+    obs_post_id: 'TW_0075',
+    obs_post_name: '중문해수욕장',
+    obs_lat: '33.234',
+    obs_lon: '126.409',
+  },
+  {
+    obs_post_id: 'TW_0062',
+    obs_post_name: '해운대해수욕장',
+    obs_lat: '35.148',
+    obs_lon: '129.17',
+  },
+];
+
+module.exports = {
+  wave_height_observatort_info,
+};
