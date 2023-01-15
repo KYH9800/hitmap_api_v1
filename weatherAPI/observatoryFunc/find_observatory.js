@@ -1,4 +1,5 @@
-const { observatoryData } = require('../observatoryFunc/observatoryObj');
+const { tide_observatory_info } = require('./tide_observatory_data'); // 조석
+const { wave_height_observatort_info } = require('./wave_height_observatort_data'); // 파고
 
 // 오늘 날짜
 const today_func = () => {
@@ -11,43 +12,57 @@ const today_func = () => {
   return today;
 };
 
-// 관측소 찾기
-const find_observatory = (lat, lon) => {
-  // 위도 경도 오차범위로 관측소 정보 찾아주는 함수 하나 만들기
-  console.log('관측소 찾기 위도: ', lat);
-  console.log('관측소 찾기 경도: ', lon);
-  // console.log('observatoryData: ', observatoryData);
+// 위도 경도 오차범위로 관측소 정보 찾아주는 함수 하나 만들기
+const find_observatory = (lat, lon, data) => {
+  let result = [];
 
-  //* - 한 값을 배열 담고 최소값인 데이터를 가진 관측소 정보를 보낸다.
+  data.forEach((data) => {
+    let data_lat = parseFloat(data.obs_lat);
+    let data_lon = parseFloat(data.obs_lon);
 
-  const obs_post_id = observatoryData.map((data) => {
-    // 위도, 경도의 오차범위로 obs_post_id를 찾는다.
-    // 오차범위의 조건
-    // 오차범위: 데이터 위도 - 받아온 위도 <= 10
-    // 오차범위: 데이터 경도 - 받아온 경도 <= 10
-    if (
-      parseFloat(lat).toFixed(1) - parseFloat(data.obs_lat).toFixed(1) >= 0.2 ||
-      parseFloat(data.obs_lat).toFixed(1) - parseFloat(lat).toFixed(1) <= 0.2
-    ) {
-      console.log('data.obs_lat: ', parseFloat(data.obs_lat).toFixed(1));
-      console.log('data.obs_post_id-01: ', data.obs_post_id);
-      if (
-        parseFloat(lon).toFixed(1) - parseFloat(data.obs_lon).toFixed(1) >= 1 ||
-        parseFloat(lon).toFixed(1) - parseFloat(data.obs_lon).toFixed(1) <= 1
-      ) {
-        console.log('data.obs_lon: ', parseFloat(data.obs_lon).toFixed(1));
-        console.log('data.obs_post_id-02: ', data.obs_post_id);
-        return data.obs_post_id;
-      }
-    }
+    // 좌표를 라디안 단위로 변환
+    const deg2rad = (deg) => {
+      return deg * (Math.PI / 180);
+    };
+
+    // 지구 반지름(km)
+    let earth_radius = 6371;
+    // 좌표를 라디안 단위로 표시
+    let deg2rad_Lat = deg2rad(data_lat - lat);
+    let deg2rad_Lon = deg2rad(data_lon - lon);
+    // 두 점 사이의 현 길이 절반의 제곱
+    let spot_length =
+      Math.sin(deg2rad_Lat / 2) * Math.sin(deg2rad_Lat / 2) +
+      Math.cos(deg2rad(lat)) * Math.cos(deg2rad(data_lat)) * Math.sin(deg2rad_Lon / 2) * Math.sin(deg2rad_Lon / 2);
+    // 각거리를 라디안으로 표시, 라디안: 각의 크기를 재는 SI 유도 단위
+    let radian = 2 * Math.atan2(Math.sqrt(spot_length), Math.sqrt(1 - spot_length));
+    // km 단위의 거리
+    let km = earth_radius * radian;
+
+    result.push(km);
   });
 
-  console.log('obs_post_id: ', obs_post_id);
-  // const obs_post_id = 'SO_0553';
-  return obs_post_id.filter((data) => data)[0];
+  const find_index = result.indexOf(Math.min.apply(null, result));
+
+  return data[find_index].obs_post_id;
+};
+
+// 조석예보 관측소 찾기
+const find_tide_observatory = (lat, lon) => {
+  const tide_observatory = find_observatory(lat, lon, tide_observatory_info);
+
+  return tide_observatory;
+};
+
+// 파고 관측소 찾기
+const find_wave_height_observatory = (lat, lon) => {
+  const tide_observatory = find_observatory(lat, lon, wave_height_observatort_info);
+
+  return tide_observatory;
 };
 
 module.exports = {
   today_func,
-  find_observatory,
+  find_tide_observatory,
+  find_wave_height_observatory,
 };
