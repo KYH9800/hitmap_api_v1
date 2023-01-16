@@ -41,7 +41,9 @@ const find_observatory = (lat, lon, data) => {
 
     result.push(km);
   });
-
+  // const min_km = Math.min.apply(null, result); // 최소 거리 정보
+  // console.log('result: ', result);
+  // console.log('min_km: ', min_km);
   const find_index = result.indexOf(Math.min.apply(null, result));
 
   return data[find_index].obs_post_id;
