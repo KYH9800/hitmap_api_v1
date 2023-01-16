@@ -7,7 +7,6 @@ const {
   find_tide_observatory,
   find_wave_height_observatory,
 } = require('../observatoryFunc/find_observatory');
-// const { observatorArr } = require('../observatory/observatoryObj');
 
 // open weather: 풍향, 풍속, 기온
 const get_weather = async (lat, lon) => {
@@ -15,6 +14,7 @@ const get_weather = async (lat, lon) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then((response) => {
+      console.log('response.data: ', response.data);
       return response.data;
     })
     .catch((error) => {

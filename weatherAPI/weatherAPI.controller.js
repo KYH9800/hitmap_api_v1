@@ -2,7 +2,7 @@ const { get_weather, get_tide_info, get_wave_height_info } = require('./services
 
 const get_weather_api = async (req, res) => {
   try {
-    const { lat, lon } = req.query;
+    const { lat, lon, place_name } = req.query;
     // open weather: 풍향, 풍속, 기온
     const open_weather = await get_weather(lat, lon);
     // 바다누리: 만조, 간조
@@ -12,6 +12,7 @@ const get_weather_api = async (req, res) => {
 
     return res.status(200).send({
       message: '날씨 정보 검색 완료',
+      place_name: place_name,
       lon: open_weather.coord.lon,
       lat: open_weather.coord.lat,
       description: open_weather.weather.description,
