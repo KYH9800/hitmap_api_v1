@@ -12,7 +12,6 @@ const get_my_info = async (user_id) => {
   if (!user_id) throw new CustomError('유저 정보가 존재하지 않습니다.', 412);
 
   const my_info = await userInfoRepository.findByUserId(user_id);
-  console.log('my_info: ', my_info);
 
   if (!my_info) {
     throw new CustomError('유저 정보가 존재하지 않습니다.', 412);
@@ -62,7 +61,6 @@ const delete_user_info = async (user_id, password) => {
   }
 
   const delete_user = await userInfoRepository.deleteUserInfo(user_id);
-  console.log('delete_user: ', delete_user);
 
   return delete_user;
 };
