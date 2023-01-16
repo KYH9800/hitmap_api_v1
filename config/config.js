@@ -6,7 +6,6 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_END_POINT,
-    timezone: '+09:00',
     dialect: 'mysql',
   },
   test: {
@@ -14,7 +13,6 @@ module.exports = {
     password: null,
     database: 'database_test',
     host: '127.0.0.1',
-    timezone: '+09:00',
     dialect: 'mysql',
   },
   production: {
@@ -22,7 +20,6 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_END_POINT,
-    timezone: '+09:00',
     dialect: 'mysql',
   },
 };
