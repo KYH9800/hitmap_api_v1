@@ -109,13 +109,13 @@ class PostRepository {
               ],
             },
           ],
-          order: [['created_at', 'DESC']],
         },
         {
           model: this.likeModel,
           attributes: ['post_id'],
         },
       ],
+      order: [[this.commentModel, 'created_at', 'DESC']],
     });
 
     return post;
