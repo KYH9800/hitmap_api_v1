@@ -97,7 +97,6 @@ class PostRepository {
         },
         {
           model: this.commentModel,
-          attributes: ['content'],
           include: [
             {
               model: this.userModel,

@@ -5,6 +5,9 @@ const { Comment } = require('../models');
 const commentRepository = new CommentRepository(Comment);
 
 const create_comment = async (user_id, post_id, content) => {
+  if (!content) {
+    throw { errorMessage: '댓글에 내용이 존재하지 않습니다.', code: 411 };
+  }
   const createComment = await commentRepository.createComment(user_id, post_id, content);
 
   return createComment;
