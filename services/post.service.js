@@ -55,9 +55,11 @@ const find_post = async (post_id) => {
 
   const commentInfo = detailPost.Comments.map((comment) => {
     return {
+      comment_id: comment.comment_id,
       user_image: comment.User.UserImage.src,
       nickname: comment.User.nickname,
       comment: comment.content,
+      created_at: comment.createdAt,
     };
   });
 
