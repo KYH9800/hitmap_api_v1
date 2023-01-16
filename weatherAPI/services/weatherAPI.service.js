@@ -14,7 +14,6 @@ const get_weather = async (lat, lon) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then((response) => {
-      console.log('response.data: ', response.data);
       return response.data;
     })
     .catch((error) => {
