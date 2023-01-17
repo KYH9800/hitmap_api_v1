@@ -19,7 +19,15 @@ const find_after2days_from_now_data = (weather_data, today, after2days_from_toda
   const after2days_from_now = weather_data.findIndex((data) => data.date >= after2days_from_today);
   const result = weather_data.slice(now, after2days_from_now + 1);
 
-  return result;
+  return result.map((data) => {
+    return {
+      post_id: data.post_id,
+      temp: data.temp,
+      wind_speed: data.wind_speed,
+      wind_deg: data.wind_deg,
+      date: data.date.split(' ')[1].split(':')[0],
+    };
+  });
 };
 
 // 날짜 생성 함수: open weather api 전용
