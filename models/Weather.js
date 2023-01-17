@@ -2,17 +2,13 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
-    static associate(models) {
-      this.hasMany(models.Comment, { foreignKey: 'post_id' });
-      this.hasMany(models.PostImage, { foreignKey: 'post_id' });
-      this.hasMany(models.FishInfo, { foreignKey: 'post_id' });
-      this.hasMany(models.Like, { foreignKey: 'post_id' });
-      this.belongsTo(models.User, { foreignKey: 'user_id' });
+  class Weather extends Model {
+    static associate() {
+      // associate
     }
   }
 
-  Post.init(
+  Weather.init(
     {
       post_id: {
         type: DataTypes.INTEGER,
@@ -20,7 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      content: {
+      temp: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      wind_speed: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      wind_deg: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      date: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -35,10 +43,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Post',
+      modelName: 'Weather',
       timestamps: true,
     },
   );
 
-  return Post;
+  return Weather;
 };
