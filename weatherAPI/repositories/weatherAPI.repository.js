@@ -26,7 +26,7 @@ class WeatherRepository {
       temp: parseInt(Math.round(data.main.temp) - 273.15),
       wind_speed: data.wind.speed,
       wind_deg: data.wind.deg,
-      date: data.dt_txt.split(' ')[1].split(':')[0],
+      date: data.dt_txt,
     });
 
     return result;
