@@ -4,7 +4,7 @@ const get_weather_api = async (req, res) => {
   try {
     const { lat, lon, place_name } = req.query;
     // open weather: 풍향, 풍속, 기온
-    const open_weather = await get_weather(lat, lon);
+    const open_weather = await get_weather(lat, lon); // console.log('open_weather: ', open_weather);
     // 바다누리: 만조, 간조
     const tide = await get_tide_info(lat, lon);
     // 바다누리: 파고
@@ -13,16 +13,13 @@ const get_weather_api = async (req, res) => {
     return res.status(200).send({
       message: '날씨 정보 검색 완료',
       place_name: place_name,
-      lon: open_weather.coord.lon,
-      lat: open_weather.coord.lat,
-      description: open_weather.weather.description,
-      temp: open_weather.main.temp,
-      wind_speed: open_weather.wind.speed,
-      wind_deg: open_weather.wind.deg,
-      tide_info: tide.data,
+      lon: lon,
+      lat: lat,
+      weather: open_weather,
       tide_observatory_info: tide.meta,
-      wave_info: wave_height.data,
+      tide_info: tide.data,
       wave_observatory_info: wave_height.meta,
+      wave_info: wave_height.data,
     });
   } catch (error) {
     console.log(error);
