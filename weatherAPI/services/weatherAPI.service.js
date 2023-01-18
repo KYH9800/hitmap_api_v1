@@ -53,7 +53,6 @@ const get_weather = async (lat, lon) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then(async (response) => {
-      console.log('response: ', response.data);
       const whether = response.data.list.map((data) => {
         return {
           temp: parseInt(Math.round(data.main.temp) - 273.15),
