@@ -137,8 +137,38 @@ const is_not_logged_in = async (req, res, next) => {
   }
 };
 
+// 로그인된 유저의 정보를 확인
+const check_logged_in_user = async (req, res, next) => {
+  try {
+    const access_token = req.cookies.access_token;
+    const payload = jwt.verify(access_token, process.env.JWT_SECRET_KEY);
+
+    const user_information = await User.findOne({
+      where: {
+        user_id: payload.user_id,
+      },
+    });
+
+    res.locals.user = user_information.user_id;
+
+    next();
+  } catch (error) {
+    console.log(error);
+    if (error.message) {
+      return res.status(error.statusCode).send({
+        errorMessage: error.message,
+        status: error.statusCode,
+      });
+    }
+    res.status(400).send({
+      errorMessage: 'middleware error, 관리자에게 문의하세요',
+    });
+  }
+};
+
 module.exports = {
   is_logged_in_refresh_token,
   is_logged_in,
   is_not_logged_in,
+  check_logged_in_user,
 };
