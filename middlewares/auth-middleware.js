@@ -157,6 +157,7 @@ const check_logged_in_user = async (req, res, next) => {
         return next();
       }
     } else {
+      res.locals.user = null;
       return next();
     }
   } catch (error) {
