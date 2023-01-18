@@ -38,12 +38,12 @@ class PostRepository {
     return createFishInfo;
   };
 
-  findAllPosts = async () => {
+  findAllPosts = async (user_id) => {
     const posts = await this.postModel.findAll({
       include: [
         {
           model: this.userModel,
-          attributes: ['nickname'],
+          attributes: ['nickname', 'user_id'],
           include: [
             {
               model: this.userImageModel,
@@ -65,12 +65,19 @@ class PostRepository {
         },
         {
           model: this.likeModel,
-          attributes: ['post_id'],
+          attributes: ['user_id'],
         },
       ],
       order: [['created_at', 'DESC']],
     });
-    return posts;
+
+    const like_user = await this.likeModel.findAll({
+      where: {
+        user_id: user_id,
+      },
+    });
+
+    return { posts, like_user: like_user };
   };
 
   findPost = async (post_id) => {
@@ -112,7 +119,7 @@ class PostRepository {
         },
         {
           model: this.likeModel,
-          attributes: ['post_id'],
+          attributes: ['user_id'],
         },
       ],
       order: [[this.commentModel, 'created_at', 'DESC']],

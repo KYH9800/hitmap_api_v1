@@ -29,7 +29,8 @@ class PostController {
 
   findAllPosts = async (req, res) => {
     try {
-      const posts = await find_all_posts();
+      const user_id = res.locals.user;
+      const posts = await find_all_posts(user_id);
 
       res.status(200).json({ posts });
     } catch (error) {
@@ -43,9 +44,10 @@ class PostController {
 
   findDetailPost = async (req, res) => {
     try {
+      const user_id = res.locals.user;
       const { postId } = req.params;
 
-      const post = await find_post(postId);
+      const post = await find_post(user_id, postId);
 
       res.status(200).json({ post });
     } catch (error) {
