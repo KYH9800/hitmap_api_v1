@@ -34,11 +34,15 @@ const find_all_posts = async (user_id) => {
     return posts.map((post) => {
       let like_status = false;
 
-      like_user.map((like) => {
-        if (post.post_id === like.post_id) {
-          like_status = true;
-        }
-      });
+      if(like_user) {
+        like_user.map((like) => {
+          if (post.post_id === like.post_id) {
+            like_status = true;
+          }
+        });  
+      } else {
+        like_status = false;
+      }
 
       return {
         post_id: post.post_id,
