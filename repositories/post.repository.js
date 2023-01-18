@@ -71,13 +71,16 @@ class PostRepository {
       order: [['created_at', 'DESC']],
     });
 
-    const like_user = await this.likeModel.findAll({
-      where: {
-        user_id: user_id,
-      },
-    });
-
-    return { posts, like_user: like_user };
+    if(user_id) {
+      const like_user = await this.likeModel.findAll({
+        where: {
+          user_id: user_id,
+        },
+      });
+      return { posts, like_user: like_user };
+    } else{
+      return { posts, like_user: false };
+    }
   };
 
   findPost = async (post_id) => {
