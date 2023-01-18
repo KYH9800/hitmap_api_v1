@@ -27,17 +27,26 @@ const create_post = async (user_id, content, fishName, src) => {
   return createPost, createPostImages, createFishInfo;
 };
 
-const find_all_posts = async () => {
+const find_all_posts = async (user_id) => {
   try {
-    const posts = await postRepository.findAllPosts();
+    const { posts, like_user } = await postRepository.findAllPosts(user_id);
 
     return posts.map((post) => {
+      let like_status = false;
+
+      like_user.map((like) => {
+        if (post.post_id === like.post_id) {
+          like_status = true;
+        }
+      });
+
       return {
         post_id: post.post_id,
         PostImage: post.PostImages,
         content: post.content,
         fishName: post.FishInfos[0].fish_name,
         like_count: post.Likes.length,
+        like: like_status,
         comment_count: post.Comments.length,
         user_id: post.user_id,
         user_image: post.User.UserImage.src,
@@ -50,7 +59,7 @@ const find_all_posts = async () => {
   }
 };
 
-const find_post = async (post_id) => {
+const find_post = async (user_id, post_id) => {
   const detailPost = await postRepository.findPost(post_id);
 
   const commentInfo = detailPost.Comments.map((comment) => {
@@ -63,12 +72,20 @@ const find_post = async (post_id) => {
     };
   });
 
+  let like_status = false;
+  detailPost.Likes.map((like) => {
+    if (user_id === like.user_id) {
+      return (like_status = true);
+    }
+  });
+
   return {
     post_id: detailPost.post_id,
     PostImage: detailPost.PostImages,
     content: detailPost.content,
     fishName: detailPost.FishInfos[0].fish_name,
     like_count: detailPost.Likes.length,
+    like: like_status,
     comment_count: detailPost.Comments.length,
     created_at: detailPost.createdAt,
     user_id: detailPost.user_id,
