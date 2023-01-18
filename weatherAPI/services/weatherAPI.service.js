@@ -2,22 +2,18 @@ require('dotenv').config();
 const { CustomError } = require('../../utils/Error');
 const axios = require('axios');
 
-const { Weather } = require('../../models');
-
 const {
   today_func,
   find_tide_observatory,
   find_wave_height_observatory,
 } = require('../observatoryFunc/find_observatory');
 
-const WeatherRepository = require('../repositories/weatherAPI.repository');
-const weatherRepository = new WeatherRepository(Weather);
-
 // data에서 지금날짜 기준 2일 후의 data까지 찾아오는 함수: open weather api 전용
 const find_after2days_from_now_data = (weather_data, today, after2days_from_today) => {
   const now = weather_data.findIndex((data) => data.date >= today);
   const after2days_from_now = weather_data.findIndex((data) => data.date >= after2days_from_today);
   const result = weather_data.slice(now, after2days_from_now + 1);
+  // const result = weather_data.slice(now + 3, after2days_from_now + 4);
 
   return result.map((data) => {
     return {
@@ -26,6 +22,7 @@ const find_after2days_from_now_data = (weather_data, today, after2days_from_toda
       wind_speed: data.wind_speed,
       wind_deg: data.wind_deg,
       date: data.date.split(' ')[1].split(':')[0],
+      original_time: data.date,
     };
   });
 };
@@ -52,48 +49,38 @@ const make_date_func = () => {
 // open weather: 풍향, 풍속, 기온
 const get_weather = async (lat, lon) => {
   const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
-  // console.log('make_date_func(): ', make_date_func());
 
-  const weather_data = await weatherRepository.getWeatherData(make_date_func().after2days);
-
-  if (weather_data.length === 0) {
-    await weatherRepository.deleteWeatherData();
-
-    await axios
-      .get(open_weather_API_URL)
-      .then(async (response) => {
-        response.data.list.map(async (data) => {
-          await weatherRepository.createWeatherData(data);
-        });
-
-        const weather_data = await weatherRepository.getWeatherData();
-
-        const result = find_after2days_from_now_data(
-          weather_data,
-          make_date_func().today,
-          make_date_func().after2days_from_today,
-        );
-
-        return result;
-      })
-      .catch((error) => {
-        console.log('error: ', error);
-        throw new CustomError(error);
+  const data = await axios
+    .get(open_weather_API_URL)
+    .then(async (response) => {
+      console.log('response: ', response.data);
+      const whether = response.data.list.map((data) => {
+        return {
+          temp: parseInt(Math.round(data.main.temp) - 273.15),
+          wind_speed: data.wind.speed,
+          wind_deg: data.wind.deg,
+          date: data.dt_txt,
+        };
       });
-  } else {
-    const weather_data = await weatherRepository.getWeatherData();
 
-    const result = find_after2days_from_now_data(
-      weather_data,
-      make_date_func().today,
-      make_date_func().after2days_from_today,
-    );
+      const result = find_after2days_from_now_data(
+        whether,
+        make_date_func().today,
+        make_date_func().after2days_from_today,
+      );
 
-    return result;
-  }
+      return result;
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+      throw new CustomError(error);
+    });
+
+  return data;
 };
 
 // 바다누리: 조석 예보
+//! database에 저장 안하고 바로 불러와 처리하기
 const get_tide_info = async (lat, lon) => {
   const obs_post_id = await find_tide_observatory(lat, lon);
   const today = await today_func();
@@ -118,6 +105,8 @@ const get_tide_info = async (lat, lon) => {
 };
 
 // 바다누리: 파고
+//! database에 저장 안하고 바로 불러와 처리하기
+//! 크롤링 단방향 요청 시에만 긁어오기
 const get_wave_height_info = async (lat, lon) => {
   const obs_post_id = await find_wave_height_observatory(lat, lon);
   const today = await today_func();
