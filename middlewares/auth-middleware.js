@@ -141,17 +141,24 @@ const is_not_logged_in = async (req, res, next) => {
 const check_logged_in_user = async (req, res, next) => {
   try {
     const access_token = req.cookies.access_token;
-    const payload = jwt.verify(access_token, process.env.JWT_SECRET_KEY);
 
-    const user_information = await User.findOne({
-      where: {
-        user_id: payload.user_id,
-      },
-    });
+    if (access_token) {
+      const payload = get_access_token_payload(access_token);
 
-    res.locals.user = user_information.user_id;
-
-    next();
+      if (!payload) {
+        return next();
+      } else {
+        const user_information = await User.findOne({
+          where: {
+            user_id: payload.user_id,
+          },
+        });
+        res.locals.user = user_information.user_id;
+        return next();
+      }
+    } else {
+      return next();
+    }
   } catch (error) {
     console.log(error);
     if (error.message) {
