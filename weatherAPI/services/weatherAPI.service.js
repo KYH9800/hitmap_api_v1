@@ -78,8 +78,20 @@ const get_weather = async (lat, lon) => {
   return data;
 };
 
+const axios_tide_info = async (url) => {
+  const map_data = await axios
+    .get(url)
+    .then((res) => {
+      return res.data.result;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return map_data;
+};
+
 // 바다누리: 조석 예보
-//! database에 저장 안하고 바로 불러와 처리하기
 const get_tide_info = async (lat, lon) => {
   const obs_post_id = await find_tide_observatory(lat, lon);
   const today = await today_func();
@@ -88,19 +100,34 @@ const get_tide_info = async (lat, lon) => {
   const service_key = `${process.env.OPEN_BADANURI_API_KEYS}`;
   const obs_code = `&ObsCode=${obs_post_id}`; // 관측소 번호
   const date = `&Date=${today}`; // 오늘 날짜
+  const date_after2days = `&Date=${parseInt(today) + 1}`; // 2일 뒤 날짜
+  const date_after3days = `&Date=${parseInt(today) + 2}`; // 3일 뒤 날짜
 
   const search_info = open_api + service_key + obs_code + date + `&ResultType=json`;
+  const search_info_after2days = open_api + service_key + obs_code + date_after2days + `&ResultType=json`;
+  const search_info_after3days = open_api + service_key + obs_code + date_after3days + `&ResultType=json`;
 
-  const data = axios
-    .get(search_info)
-    .then((res) => {
-      return res.data.result;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const today_tide = await axios_tide_info(search_info);
+  const after2days_tide = await axios_tide_info(search_info_after2days);
+  const after3days_tide = await axios_tide_info(search_info_after3days);
 
-  return data;
+  const tide = [...today_tide.data, ...after2days_tide.data, ...after3days_tide.data];
+
+  const index = tide.findIndex((data) => {
+    const date = new Date();
+    const year = date.getFullYear(); // 년
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월
+    const day = date.getDate(); // 일
+    const hour = date.getHours(); // 시간
+    const minutes = ('0' + date.getMinutes()).slice(-2); // 분
+    const seconds = ('0' + date.getSeconds()).slice(-2); // 초
+
+    const now = `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+
+    return now < data.tph_time;
+  });
+
+  return tide.slice(index, index + 8);
 };
 
 // 바다누리: 파고
