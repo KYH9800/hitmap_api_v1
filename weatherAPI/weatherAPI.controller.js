@@ -16,9 +16,7 @@ const get_weather_api = async (req, res) => {
       lon: lon,
       lat: lat,
       weather: open_weather,
-      tide_observatory_info: tide.meta,
-      tide_info: tide.data,
-      wave_observatory_info: wave_height.meta,
+      tide_info: tide,
       wave_info: wave_height.data,
     });
   } catch (error) {
