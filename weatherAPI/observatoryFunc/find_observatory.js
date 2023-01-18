@@ -1,5 +1,4 @@
 const { tide_observatory_info } = require('./tide_observatory_data'); // 조석
-const { wave_height_observatort_info } = require('./wave_height_observatort_data'); // 파고
 
 // 오늘 날짜
 const today_func = () => {
@@ -10,6 +9,33 @@ const today_func = () => {
   const today = `${year}${month}${day}`; // 오늘 날짜
 
   return today;
+};
+
+// 오늘 날짜 시간에 대한 모든 정보
+const all_time_info_in_today = () => {
+  const date = new Date();
+  const year = date.getFullYear(); // 년
+  const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월
+  const day = date.getDate(); // 일
+  const hour = date.getHours(); // 시간
+  const minutes = ('0' + date.getMinutes()).slice(-2); // 분
+  const seconds = ('0' + date.getSeconds()).slice(-2); // 초
+
+  const YY_MM_DD_HH_MM_SS = `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+  const YY_MM_DD_HH_MM = `${year}-${month}-${day} ${hour}:${minutes}`;
+  const YY_MM_DD_HH = `${year}-${month}-${day} ${hour}`;
+  const YY_MM_DD = `${year}-${month}-${day}`;
+  const YY_MM = `${year}-${month}`;
+  const YY = `${year}`;
+
+  return {
+    YY_MM_DD_HH_MM_SS: YY_MM_DD_HH_MM_SS,
+    YY_MM_DD_HH_MM: YY_MM_DD_HH_MM,
+    YY_MM_DD_HH: YY_MM_DD_HH,
+    YY_MM_DD: YY_MM_DD,
+    YY_MM: YY_MM,
+    YY: YY,
+  };
 };
 
 // 위도 경도 오차범위로 관측소 정보 찾아주는 함수 하나 만들기
@@ -41,9 +67,7 @@ const find_observatory = (lat, lon, data) => {
 
     result.push(km);
   });
-  // const min_km = Math.min.apply(null, result); // 최소 거리 정보
-  // console.log('result: ', result);
-  // console.log('min_km: ', min_km);
+
   const find_index = result.indexOf(Math.min.apply(null, result));
 
   return data[find_index].obs_post_id;
@@ -56,15 +80,8 @@ const find_tide_observatory = (lat, lon) => {
   return tide_observatory;
 };
 
-// 파고 관측소 찾기
-const find_wave_height_observatory = (lat, lon) => {
-  const tide_observatory = find_observatory(lat, lon, wave_height_observatort_info);
-
-  return tide_observatory;
-};
-
 module.exports = {
   today_func,
+  all_time_info_in_today,
   find_tide_observatory,
-  find_wave_height_observatory,
 };
