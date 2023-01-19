@@ -4,48 +4,8 @@ const axios = require('axios');
 
 const { today_func, all_time_info_in_today, find_tide_observatory } = require('../observatoryFunc/find_observatory');
 
-// data에서 지금날짜 기준 2일 후의 data까지 찾아오는 함수: open weather api 전용
-const find_after2days_from_now_data = (weather_data, today, after2days_from_today) => {
-  const now = weather_data.findIndex((data) => data.date >= today);
-  const after2days_from_now = weather_data.findIndex((data) => data.date >= after2days_from_today);
-  const result = weather_data.slice(now, after2days_from_now + 1);
-
-  return result.map((data) => {
-    return {
-      post_id: data.post_id,
-      temp: data.temp,
-      wind_speed: data.wind_speed,
-      wind_deg: data.wind_deg,
-      rain: data.rain,
-      date: data.date.split(' ')[1].split(':')[0],
-      original_time: data.date,
-    };
-  });
-};
-
-// 날짜 생성 함수: open weather api 전용
-const make_date_func = () => {
-  const date = new Date();
-  const year = date.getFullYear(); // 년
-  const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월
-  const day = date.getDate(); // 일
-  const hour = date.getHours(); // 시간
-
-  const after2days = `${year}-${month}-${day + 2} 00:00:00`;
-  const today = `${year}-${month}-${day} ${hour}:00:00`;
-  const after2days_from_today = `${year}-${month}-${day + 2} ${hour}:00:00`;
-
-  return {
-    after2days: after2days,
-    today: today,
-    after2days_from_today: after2days_from_today,
-  };
-};
-
-// open weather: 풍향, 풍속, 기온
-const get_weather = async (lat, lon) => {
-  const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
-
+// open weather api 요청 함수
+const axios_weather_info = async (open_weather_API_URL) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then(async (response) => {
@@ -59,13 +19,7 @@ const get_weather = async (lat, lon) => {
         };
       });
 
-      const result = find_after2days_from_now_data(
-        whether,
-        make_date_func().today,
-        make_date_func().after2days_from_today,
-      );
-
-      return result;
+      return whether;
     })
     .catch((error) => {
       console.log('error: ', error);
@@ -73,6 +27,29 @@ const get_weather = async (lat, lon) => {
     });
 
   return data;
+};
+
+// open weather: 풍향, 풍속, 기온
+const get_weather = async (lat, lon) => {
+  const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
+
+  const whether = await axios_weather_info(open_weather_API_URL);
+  console.log('whether: ', whether);
+
+  //! 받아온 data에서 오늘 날짜 일수와 같고 현재 시간보다 큰 인덱스를 찾는다.
+  const index = whether.findIndex((data) => {
+    const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
+    const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
+
+    const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
+
+    const data_yy_mm_dd = data.date.split(' ')[0]; // 데이터의 년-월-일
+    const data_time = data.date.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
+
+    return data_yy_mm_dd === yy_mm_dd && now < data_time;
+  });
+
+  return whether.slice(index - 1, index + 16);
 };
 
 // 조석예보 api 요청 함수
