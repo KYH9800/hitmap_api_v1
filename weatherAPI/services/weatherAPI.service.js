@@ -112,9 +112,15 @@ const get_tide_info = async (lat, lon) => {
   const tide = [...today_tide.data, ...after2days_tide.data, ...after3days_tide.data];
 
   const index = tide.findIndex((data) => {
-    const now = all_time_info_in_today().YY_MM_DD_HH_MM_SS;
+    const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
+    const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
 
-    return now < data.tph_time;
+    const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
+
+    const data_yy_mm_dd = data.tph_time.split(' ')[0]; // 데이터의 년-월-일
+    const data_time = data.tph_time.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
+
+    return data_yy_mm_dd === yy_mm_dd && now < data_time;
   });
 
   return tide.slice(index, index + 8);
