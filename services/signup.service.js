@@ -28,7 +28,11 @@ const user_register = async (email, password, passwordConfirm, nickname, image) 
   }
 
   if (!image) {
-    image = 'http://localhost:3065/userImage/images/user_logo.png'; // 기본 이미지 설정
+    if (process.env.NODE_ENV === 'production') {
+      image = 'http://https://koyunhyeok.shop/userImage/images/user_logo.png';
+    } else {
+      image = 'http://localhost:3065/userImage/images/user_logo.png';
+    }
   }
 
   const hashed_password = await bcrypt.hash(password, 12);
