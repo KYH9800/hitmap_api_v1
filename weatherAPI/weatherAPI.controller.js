@@ -14,7 +14,13 @@ const get_weather_api = async (req, res) => {
       lon: lon,
       lat: lat,
       weather: open_weather,
-      tide_info: tide,
+      tide_info: tide.map((info) => {
+        return {
+          '해수면 높이(cm)': info.tph_level,
+          tph_time: info.tph_time,
+          hl_code: info.hl_code,
+        };
+      }),
     });
   } catch (error) {
     console.log(error);
