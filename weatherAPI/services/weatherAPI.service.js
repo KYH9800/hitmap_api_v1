@@ -34,9 +34,7 @@ const get_weather = async (lat, lon) => {
   const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
 
   const whether = await axios_weather_info(open_weather_API_URL);
-  console.log('whether: ', whether);
 
-  //! 받아온 data에서 오늘 날짜 일수와 같고 현재 시간보다 큰 인덱스를 찾는다.
   const index = whether.findIndex((data) => {
     const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
     const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
@@ -49,7 +47,19 @@ const get_weather = async (lat, lon) => {
     return data_yy_mm_dd === yy_mm_dd && now < data_time;
   });
 
-  return whether.slice(index - 1, index + 16);
+  const result = whether.slice(index - 1, index + 16);
+
+  return result.map((data) => {
+    return {
+      post_id: data.post_id,
+      temp: data.temp,
+      wind_speed: data.wind_speed,
+      wind_deg: data.wind_deg,
+      rain: data.rain,
+      time: data.date.split(' ')[1].split(':')[0],
+      original_time: data.date,
+    };
+  });
 };
 
 // 조석예보 api 요청 함수
