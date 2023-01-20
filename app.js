@@ -10,8 +10,6 @@ const cors = require('cors');
 const db = require('./models');
 // cookie-parser
 const cookieParser = require('cookie-parser');
-// session
-const session = require('express-session');
 // routes
 const indexRouter = require('./routes');
 
@@ -49,34 +47,6 @@ if (process.env.NODE_ENV === 'production') {
     cors({
       origin: true,
       credentials: true,
-    }),
-  );
-}
-
-// 배포용
-if (process.env.NODE_ENV === 'production') {
-  app.set('trust proxy', 1);
-  app.use(
-    session({
-      saveUninitialized: false,
-      resave: false,
-      secret: process.env.COOKIE_SECRET,
-      proxy: true,
-      cookie: {
-        sameSite: 'None',
-        secure: false,
-        httpOnly: true,
-      },
-      name: 'session-cookie',
-    }),
-  );
-} else {
-  // 개발용
-  app.use(
-    session({
-      saveUninitialized: false,
-      resave: false,
-      secret: process.env.COOKIE_SECRET,
     }),
   );
 }
