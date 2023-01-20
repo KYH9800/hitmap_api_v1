@@ -29,7 +29,7 @@ const user_register = async (email, password, passwordConfirm, nickname, image) 
 
   if (!image) {
     if (process.env.NODE_ENV === 'production') {
-      image = 'http://https://koyunhyeok.shop/userImage/images/user_logo.png';
+      image = 'https://koyunhyeok.shop/userImage/images/user_logo.png';
     } else {
       image = 'http://localhost:3065/userImage/images/user_logo.png';
     }
