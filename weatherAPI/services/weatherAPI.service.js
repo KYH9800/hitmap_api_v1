@@ -110,7 +110,7 @@ const get_tide_info = async (lat, lon) => {
     return data_yy_mm_dd === yy_mm_dd && now < data_time;
   });
 
-  return tide.slice(index, index + 8);
+  return tide.slice(index - 1, index + 7); // return tide.slice(index, index + 8);
 };
 
 module.exports = {
