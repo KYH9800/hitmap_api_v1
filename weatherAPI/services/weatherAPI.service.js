@@ -40,14 +40,22 @@ const get_weather = async (lat, lon) => {
     const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
 
     const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
+    const dd = all_time_info_in_today().DD; // 년-월-일
 
     const data_yy_mm_dd = data.date.split(' ')[0]; // 데이터의 년-월-일
-    const data_time = data.date.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
+    let data_time = data.date.split(' ')[1].split(':')[0]; // Hour in 데이터 시간에
 
-    return data_yy_mm_dd === yy_mm_dd && now < data_time;
+    if (data_time === '00') {
+      data_time = '24';
+    }
+
+    return (
+      (data_yy_mm_dd === yy_mm_dd && now < data_time) ||
+      (parseInt(data_yy_mm_dd.split(' ')[0].split('-')[2]) > parseInt(dd) && now < data_time)
+    );
   });
 
-  const result = whether.slice(index - 1, index + 16);
+  const result = whether.slice(index === 0 ? 0 : index - 1, index === 0 ? index + 15 : index + 16);
 
   return result.map((data) => {
     return {
@@ -103,14 +111,18 @@ const get_tide_info = async (lat, lon) => {
     const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
 
     const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
+    const dd = all_time_info_in_today().DD; // 년-월-일
 
     const data_yy_mm_dd = data.tph_time.split(' ')[0]; // 데이터의 년-월-일
-    const data_time = data.tph_time.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
+    let data_time = data.tph_time.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
 
-    return data_yy_mm_dd === yy_mm_dd && now < data_time;
+    return (
+      (data_yy_mm_dd === yy_mm_dd && now < data_time) ||
+      parseInt(data_yy_mm_dd.split(' ')[0].split('-')[2]) > parseInt(dd)
+    );
   });
 
-  return tide.slice(index - 1, index + 7); // return tide.slice(index, index + 8);
+  return tide.slice(index === 0 ? 0 : index - 1, index === 0 ? index + 6 : index + 7);
 };
 
 module.exports = {
