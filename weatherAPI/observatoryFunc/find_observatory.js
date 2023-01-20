@@ -27,6 +27,8 @@ const all_time_info_in_today = () => {
   const YY_MM_DD = `${year}-${month}-${day}`;
   const YY_MM = `${year}-${month}`;
   const YY = `${year}`;
+  const MM = `${month}`;
+  const DD = `${day}`;
 
   return {
     YY_MM_DD_HH_MM_SS: YY_MM_DD_HH_MM_SS,
@@ -35,6 +37,8 @@ const all_time_info_in_today = () => {
     YY_MM_DD: YY_MM_DD,
     YY_MM: YY_MM,
     YY: YY,
+    MM: MM,
+    DD: DD,
   };
 };
 
