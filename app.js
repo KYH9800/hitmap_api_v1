@@ -12,6 +12,12 @@ const db = require('./models');
 const cookieParser = require('cookie-parser');
 // routes
 const indexRouter = require('./routes');
+// helmet - XSS 공격을 방지하기 위한 모듈
+const helmet = require('helmet');
+// hpp(HTTP Parameter Pollution) - Express의 중복 이름 파라메터 공격을 방어해주는 모듈
+// hpp 모듈은 여러개의 query parameter로 전달된 값들이 모두 무시되고 단 한개의 값만 담겨지게 만든다.
+// 참고: https://inpa.tistory.com/entry/NODE-%EB%B3%B4%EC%95%88-%F0%9F%93%9A-hpp-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%EB%B2%95
+const hpp = require('hpp');
 
 // db 연결 확인
 db.sequelize
@@ -33,6 +39,8 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // 배포용
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
+  app.use(helmet());
+  app.use(hpp());
   // CORS
   app.use(
     cors({
