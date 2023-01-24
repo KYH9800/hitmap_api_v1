@@ -1,9 +1,9 @@
-const { User, UserImage, Post, PostImage } = require('../models');
+const { User, UserImage, Post, PostImage, Like } = require('../models');
 
 const { CustomError } = require('../utils/Error');
 
 const UserInfoRepository = require('../repositories/userInfo.repository');
-const userInfoRepository = new UserInfoRepository(User, UserImage, Post, PostImage);
+const userInfoRepository = new UserInfoRepository(User, UserImage, Post, PostImage, Like);
 
 const bcrypt = require('bcrypt');
 

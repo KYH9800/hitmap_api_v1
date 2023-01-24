@@ -8,8 +8,8 @@ class LoginController {
       const { access_token, refresh_token, nickname } = await user_login(email, password);
 
       if (process.env.NODE_ENV === 'production') {
-        res.cookie('access_token', access_token, { sameSite: 'None', secure: false });
-        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false });
+        res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
+        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
       } else {
         res.cookie('access_token', access_token);
         res.cookie('refresh_token', refresh_token);
