@@ -61,8 +61,9 @@ class UserInfoController {
   getMyPosts = async (req, res) => {
     try {
       const user_id = res.locals.user;
+      const { lastId } = req.query;
 
-      const my_posts = await get_my_posts(user_id);
+      const my_posts = await get_my_posts(user_id, lastId);
 
       return res.status(200).send({
         user_id: my_posts.user_id,
