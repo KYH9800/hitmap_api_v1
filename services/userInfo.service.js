@@ -38,8 +38,8 @@ const update_user_info = async (user_id, prevPassword, password, passwordConfirm
 };
 
 // 내 게시글 조회
-const get_my_posts = async (user_id) => {
-  const my_posts = await userInfoRepository.findMyPosts(user_id);
+const get_my_posts = async (user_id, lastId) => {
+  const my_posts = await userInfoRepository.findMyPosts(user_id, lastId);
 
   if (!my_posts) {
     throw new CustomError('게시글이 존재하지 않습니다.', 404);
