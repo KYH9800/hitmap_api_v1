@@ -7,11 +7,14 @@ class UserInfoController {
       const user_id = res.locals.user;
 
       const user_info = await get_my_info(user_id);
+      console.log('user_info: ', user_info);
 
       return res.status(200).send({
         user_id: user_info.user_id,
         email: user_info.email,
         nickname: user_info.nickname,
+        my_post_length: user_info.Posts.length,
+        liked_length: user_info.Likes.length,
         profile_image: user_info.UserImage.src,
       });
     } catch (error) {

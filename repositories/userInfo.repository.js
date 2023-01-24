@@ -1,9 +1,10 @@
 class UserInfoRepository {
-  constructor(UserModel, UserImageModel, PostModel, PostImageModel) {
+  constructor(UserModel, UserImageModel, PostModel, PostImageModel, LikeModel) {
     this.userModel = UserModel;
     this.userImageModel = UserImageModel;
     this.postModel = PostModel;
     this.postImageModel = PostImageModel;
+    this.likeModel = LikeModel;
   }
 
   // 내 정보 조회
@@ -17,6 +18,14 @@ class UserInfoRepository {
         {
           model: this.userImageModel,
           attributes: ['src'],
+        },
+        {
+          model: this.postModel,
+          attributes: ['post_id'],
+        },
+        {
+          model: this.likeModel,
+          attributes: ['user_id'],
         },
       ],
     });

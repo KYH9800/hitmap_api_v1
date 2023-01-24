@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
   // CORS
   app.use(
     cors({
-      origin: true,
+      origin: ['https://hitmap-fe.vercel.app', 'http://localhost:3000'],
       credentials: true,
     }),
   );
