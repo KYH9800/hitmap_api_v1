@@ -1,5 +1,4 @@
-const Sequelize = require('sequelize');
-const { sequelize } = require('../models');
+const { Op } = require('sequelize');
 
 class PostRepository {
   constructor(UserModel, UserImageModel, PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
@@ -38,8 +37,14 @@ class PostRepository {
     return createFishInfo;
   };
 
-  findAllPosts = async (user_id) => {
+  findAllPosts = async (user_id, last_id) => {
+    const where = {};
+    if (parseInt(last_id, 10)) {
+      where.post_id = { [Op.lt]: parseInt(last_id, 10) };
+    }
     const posts = await this.postModel.findAll({
+      where,
+      limit: 15,
       include: [
         {
           model: this.userModel,
@@ -71,14 +76,14 @@ class PostRepository {
       order: [['created_at', 'DESC']],
     });
 
-    if(user_id) {
+    if (user_id) {
       const like_user = await this.likeModel.findAll({
         where: {
           user_id: user_id,
         },
       });
       return { posts, like_user: like_user };
-    } else{
+    } else {
       return { posts, like_user: false };
     }
   };
@@ -159,15 +164,6 @@ class PostRepository {
       await this.likeModel.destroy({ where: { user_id, post_id } });
       return { message: '좋아요 취소' };
     }
-  };
-
-  countLike = async (post_id) => {
-    const likes = await this.likeModel.findAll({
-      where: { post_id },
-      attributes: [[Sequelize.fn('COUNT', sequelize.col('like_id')), 'Likes']],
-    });
-
-    return likes[0];
   };
 }
 
