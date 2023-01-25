@@ -27,19 +27,19 @@ const create_post = async (user_id, content, fishName, src) => {
   return createPost, createPostImages, createFishInfo;
 };
 
-const find_all_posts = async (user_id) => {
+const find_all_posts = async (user_id, last_id) => {
   try {
-    const { posts, like_user } = await postRepository.findAllPosts(user_id);
+    const { posts, like_user } = await postRepository.findAllPosts(user_id, last_id);
 
     return posts.map((post) => {
       let like_status = false;
 
-      if(like_user) {
+      if (like_user) {
         like_user.map((like) => {
           if (post.post_id === like.post_id) {
             like_status = true;
           }
-        });  
+        });
       } else {
         like_status = false;
       }

@@ -30,7 +30,8 @@ class PostController {
   findAllPosts = async (req, res) => {
     try {
       const user_id = res.locals.user;
-      const posts = await find_all_posts(user_id);
+      const { lastId } = req.query;
+      const posts = await find_all_posts(user_id, lastId);
 
       res.status(200).json({ posts });
     } catch (error) {
