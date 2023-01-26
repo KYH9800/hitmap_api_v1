@@ -7,7 +7,6 @@ class UserInfoController {
       const user_id = res.locals.user;
 
       const user_info = await get_my_info(user_id);
-      console.log('user_info: ', user_info);
 
       return res.status(200).send({
         user_id: user_info.user_id,

@@ -87,7 +87,7 @@ class UserInfoRepository {
     };
 
     if (parseInt(lastId, 10)) {
-      where.itemId = { [Op.lt]: parseInt(lastId, 10) }; // Op: Operater
+      where.post_id = { [Op.lt]: parseInt(lastId, 10) }; // Op: Operater
     }
 
     const all_my_posts = await this.postModel.findAll({
