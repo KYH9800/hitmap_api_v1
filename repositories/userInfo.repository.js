@@ -15,7 +15,7 @@ class UserInfoRepository {
       where: {
         user_id: user_id,
       },
-      attributes: ['user_id', 'email', 'nickname'],
+      attributes: ['user_id', 'email', 'nickname', 'social'],
       include: [
         {
           model: this.userImageModel,
@@ -51,6 +51,33 @@ class UserInfoRepository {
     await this.userModel.update(
       {
         password: password,
+        nickname: nickname,
+      },
+      {
+        where: {
+          user_id: user_id,
+        },
+      },
+    );
+
+    if (image) {
+      await this.userImageModel.update(
+        {
+          src: image,
+        },
+        {
+          where: {
+            user_id: user_id,
+          },
+        },
+      );
+    }
+  };
+
+  // 카카오 로그인 사용자의 내 정보 수정
+  updateKakaoUserInfo = async (user_id, password, nickname, image) => {
+    await this.userModel.update(
+      {
         nickname: nickname,
       },
       {

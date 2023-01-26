@@ -15,6 +15,7 @@ class UserInfoController {
         my_post_length: user_info.Posts.length,
         liked_length: user_info.Likes.length,
         profile_image: user_info.UserImage.src,
+        social: user_info.social,
       });
     } catch (error) {
       console.log(error);
