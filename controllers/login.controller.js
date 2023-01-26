@@ -81,6 +81,10 @@ class LoginController {
       console.log('refresh_token: ', refresh_token);
       console.log('nickname: ', nickname);
 
+      // 기존 Cookie 제거
+      await res.clearCookie('access_token');
+      await res.clearCookie('refresh_token');
+
       if (process.env.NODE_ENV === 'production') {
         res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
         res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
@@ -99,8 +103,7 @@ class LoginController {
     } catch (error) {
       if (error.message) {
         console.log('error: ', error);
-        //! 리다이렉트 시켜줘야함!!
-        //* 내 정보 조회에 사용되는 모든 응답에 social 키를 줘야함
+        //* 리다이렉트 시켜줘야함!!
         return res.status(error.statusCode).send({
           errorMessage: error.message,
           status: error.statusCode,
