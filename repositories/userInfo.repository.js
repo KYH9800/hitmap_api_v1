@@ -76,12 +76,6 @@ class UserInfoRepository {
 
   // 내 게시글 조회
   findMyPosts = async (user_id, lastId) => {
-    const find_user = await this.userModel.findOne({
-      where: {
-        user_id: user_id,
-      },
-    });
-
     const where = {
       user_id: user_id,
     };
@@ -104,8 +98,6 @@ class UserInfoRepository {
     });
 
     return {
-      user_id: find_user.user_id,
-      nickname: find_user.nickname,
       Posts: all_my_posts,
     };
   };
