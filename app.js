@@ -39,7 +39,11 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // 배포용
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: false,
+    }),
+  );
   app.use(hpp());
   // CORS
   app.use(
