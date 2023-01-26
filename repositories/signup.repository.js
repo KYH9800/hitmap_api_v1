@@ -31,6 +31,7 @@ class SignupRepository {
       email: email,
       password: password,
       nickname: nickname,
+      social: 0, // 서비스 내에 일반 User
     });
 
     const userProfileImage = await this.userImageModel.create({
