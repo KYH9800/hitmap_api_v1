@@ -7,7 +7,6 @@ class UserInfoController {
       const user_id = res.locals.user;
 
       const user_info = await get_my_info(user_id);
-      console.log('user_info: ', user_info);
 
       return res.status(200).send({
         user_id: user_info.user_id,
@@ -66,8 +65,6 @@ class UserInfoController {
       const my_posts = await get_my_posts(user_id, lastId);
 
       return res.status(200).send({
-        user_id: my_posts.user_id,
-        nickname: my_posts.nickname,
         Posts: my_posts.Posts,
       });
     } catch (error) {
