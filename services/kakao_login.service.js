@@ -2,8 +2,6 @@ const { User, UserImage } = require('../models');
 
 const KaKaoSignupRepository = require('../repositories/kakao_login.repository');
 const kaKaoSignupRepository = new KaKaoSignupRepository(User, UserImage);
-// custom error
-const { CustomError } = require('../utils/Error');
 
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
