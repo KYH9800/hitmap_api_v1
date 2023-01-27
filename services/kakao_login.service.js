@@ -2,41 +2,40 @@ const { User, UserImage } = require('../models');
 
 const KaKaoSignupRepository = require('../repositories/kakao_login.repository');
 const kaKaoSignupRepository = new KaKaoSignupRepository(User, UserImage);
-// custom error
-// const { CustomError } = require('../utils/Error');
 
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 
 // token 발급
 const get_kakao_tokens = async (code) => {
-  const authToken = await axios
-    .post(
-      'https://kauth.kakao.com/oauth/token',
-      {},
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+  const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
+  const grant_type = 'authorization_code';
+  const client_id = process.env.NODE_ENV === 'production' ? process.env.REST_API_KEY : process.env.DEV_REST_API_KEY; // '8806104a1e87ed8c264c1ea546a4eaa9'
+  const redirect_uri = process.env.NODE_ENV === 'production' ? process.env.REDIRECT_URL : process.env.DEV_REDIRECT_URL; // 'http://localhost:3065/user/kakaoLogin/start'
+  try {
+    const authToken = await axios
+      .post(
+        `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&code=${code}`,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
         },
-        params: {
-          grant_type: 'authorization_code',
-          client_id: process.env.NODE_ENV === 'production' ? process.env.REST_API_KEY : process.env.DEV_REST_API_KEY, // '8806104a1e87ed8c264c1ea546a4eaa9',
-          redirect_uri: process.env.NODE_ENV === 'production' ? process.env.REDIRECT_URL : process.env.DEV_REDIRECT_URL, // 'http://localhost:3065/user/kakaoLogin/start',
-          code: code,
-        },
-      },
-    )
-    .then((res) => {
-      return {
-        access_token: res.data['access_token'],
-        refresh_token: res.data['refresh_token'],
-      };
-    })
-    .catch((err) => {
-      console.log('err: ', err);
-    });
+      )
+      .then((res) => {
+        return {
+          access_token: res.data['access_token'],
+          refresh_token: res.data['refresh_token'],
+        };
+      })
+      .catch((error) => {
+        console.log('error: ', error);
+      });
 
-  return authToken;
+    return authToken;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 회원정보 가져오기
