@@ -19,7 +19,7 @@ router
   .post('/logout', auth.is_logged_in, loginController.logout) // 로그아웃
   .post('/email', auth.is_not_logged_in, checkController.findByEmail) // 이메일 중복확인
   .post('/nickname', auth.is_not_logged_in, checkController.findByNickname) // 닉네임 중복확인
-  .get('/kakaoLogin/start', auth.is_not_logged_in, loginController.startKakaoLogin) // 카카오 로그인
-  .post('/kakaoLogout', auth.is_logged_in, loginController.kakaoLogout); // 카카오 로그아웃
+  .get('/kakaoLogin/start', loginController.startKakaoLogin) // 카카오 로그인
+  .post('/kakaoLogin/finish', loginController.make_jwt_using_kakao_token); // 카카오 로그인 token 생성
 
 module.exports = router;
