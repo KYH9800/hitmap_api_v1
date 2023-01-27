@@ -102,18 +102,18 @@ class UserInfoRepository {
   };
 
   // 내 게시글 조회
-  findMyPosts = async (user_id, lastId) => {
+  findMyPosts = async (user_id) => {
     const where = {
-      user_id: user_id,
+      user_id: user_id, // lastId
     };
 
-    if (parseInt(lastId, 10)) {
-      where.post_id = { [Op.lt]: parseInt(lastId, 10) }; // Op: Operater
-    }
+    // if (parseInt(lastId, 10)) {
+    //   where.post_id = { [Op.lt]: parseInt(lastId, 10) }; // Op: Operater
+    // }
 
     const all_my_posts = await this.postModel.findAll({
       where,
-      limit: 15,
+      // limit: 15,
       order: [['createdAt', 'DESC']],
       attributes: ['post_id', 'created_at'],
       include: [
