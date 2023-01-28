@@ -5,6 +5,7 @@ const kaKaoSignupRepository = new KaKaoSignupRepository(User, UserImage);
 
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
+const { CustomError } = require('../utils/Error');
 
 // token 발급
 const get_kakao_tokens = async (code) => {
@@ -40,6 +41,13 @@ const get_kakao_tokens = async (code) => {
 
 // 회원정보 가져오기
 const get_user_info = async (authToken) => {
+  if (!authToken) {
+    throw new CustomError(
+      'KOE320: 동일한 인가 코드를 두 번 이상 사용하거나, 이미 만료된 인가 코드를 사용한 경우, 혹은 인가 코드를 찾을 수 없습니다.',
+      320,
+    );
+  }
+
   const user_data = await axios
     .get('https://kapi.kakao.com/v2/user/me', {
       headers: {
