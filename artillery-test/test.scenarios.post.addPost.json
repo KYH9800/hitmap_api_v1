@@ -1,0 +1,51 @@
+{
+  "config": {
+    "target": "http://localhost:3065",
+    "phases": [
+      {
+        "duration": 60,
+        "arrivalRate": 100
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "유저테스트",
+      "flow": [
+        {
+          "get": {
+            "url": "/post"
+          }
+        },
+        {
+          "post": {
+            "url": "/user/login",
+            "json": {
+              "email": "test@test.com",
+              "password": "a123123123!"
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/post"
+          }
+        },
+        {
+          "post": {
+            "url": "/post",
+            "json": {
+              "content": "test content",
+              "fishName": "test fishName"
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/post"
+          }
+        }
+      ]
+    }
+  ]
+}
