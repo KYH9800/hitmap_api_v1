@@ -62,7 +62,7 @@ const delete_user_info = async (user_id, password) => {
 
   const find_user = await userInfoRepository.findUser(user_id);
 
-  if (find_user.social) {
+  if (parseInt(find_user.social)) {
     // 카카오 로그인된 사용자
     const delete_user = await userInfoRepository.deleteUserInfo(user_id);
 
@@ -73,11 +73,11 @@ const delete_user_info = async (user_id, password) => {
 
     if (!password_check) {
       throw new CustomError('비밀번호가 일치하지 않습니다.', 412);
+    } else {
+      const delete_user = await userInfoRepository.deleteUserInfo(user_id);
+
+      return delete_user;
     }
-
-    const delete_user = await userInfoRepository.deleteUserInfo(user_id);
-
-    return delete_user;
   }
 };
 
