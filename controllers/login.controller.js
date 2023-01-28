@@ -68,20 +68,12 @@ class LoginController {
   startKakaoLogin = async (req, res) => {
     try {
       const { code } = req.body;
-      console.log('code: ', code);
-
       // token 발급
       const authToken = await get_kakao_tokens(code);
-
       // 회원정보 가져오기
       const user_data = await get_user_info(authToken);
-      console.log('user_data: ', user_data);
-
       // 인증 완료 후 회원정보 바탕으로 token 발행
       const { access_token, refresh_token, nickname } = await make_token_after_check_user_info(user_data);
-      console.log('access_token: ', access_token);
-      console.log('refresh_token: ', refresh_token);
-      console.log('nickname: ', nickname);
 
       if (process.env.NODE_ENV === 'production') {
         res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
@@ -100,7 +92,6 @@ class LoginController {
     } catch (error) {
       if (error.message) {
         console.log('error: ', error);
-        // 리다이렉트 시켜줘야함!!
         return res.status(error.statusCode).send({
           errorMessage: error.message,
           status: error.statusCode,
