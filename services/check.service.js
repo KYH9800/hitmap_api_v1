@@ -17,7 +17,6 @@ const check_user_email = async (email) => {
 
 const check_user_nickname = async (nickname) => {
   const aleady_user_nickname = await checkRepository.findByNickname(nickname);
-  console.log('service aleady_user_nickname: ', aleady_user_nickname);
 
   if (aleady_user_nickname) {
     throw new CustomError('이미 사용중인 닉네임 입니다.', 401);
