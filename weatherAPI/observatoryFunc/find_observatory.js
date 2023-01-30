@@ -1,5 +1,21 @@
 const { tide_observatory_info } = require('./tide_observatory_data'); // 조석
 
+// 몇일 후
+function afterDays(afterNum) {
+  const date = new Date();
+  const year = date.getFullYear(); // 년
+  const day = date.getDate(); // 일
+
+  const target = new Date(year, date.getMonth(), day + afterNum); // .toLocaleDateString();
+  const targetYear = target.getFullYear(); // 년
+  const targetMonth = ('0' + (target.getMonth() + 1)).slice(-2); // 월
+  const targetDay = ('0' + target.getDate()).slice(-2); // 일
+
+  const result = `${targetYear}${targetMonth}${targetDay}`;
+
+  return result;
+}
+
 // 오늘 날짜
 const today_func = () => {
   const date = new Date();
@@ -7,8 +23,16 @@ const today_func = () => {
   const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월
   const day = date.getDate(); // 일
   const today = `${year}${month}${day}`; // 오늘 날짜
+  const after2days = afterDays(1);
+  const after3days = afterDays(2);
+  console.log('after2days: ', after2days);
+  console.log('after3days: ', after3days);
 
-  return today;
+  return {
+    today: today,
+    after2days: after2days,
+    after3days: after3days,
+  };
 };
 
 // 오늘 날짜 시간에 대한 모든 정보
