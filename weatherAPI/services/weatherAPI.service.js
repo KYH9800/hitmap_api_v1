@@ -87,14 +87,16 @@ const axios_tide_info = async (url) => {
 // 바다누리: 조석 예보
 const get_tide_info = async (lat, lon) => {
   const obs_post_id = await find_tide_observatory(lat, lon);
-  const today = await today_func();
+  const today = await today_func().today;
+  const after2days = await today_func().after2days;
+  const after3days = await today_func().after3days;
 
   const open_api = 'http://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=';
   const service_key = `${process.env.OPEN_BADANURI_API_KEYS}`;
   const obs_code = `&ObsCode=${obs_post_id}`; // 관측소 번호
   const date = `&Date=${today}`; // 오늘 날짜
-  const date_after2days = `&Date=${parseInt(today) + 1}`; // 2일 뒤 날짜
-  const date_after3days = `&Date=${parseInt(today) + 2}`; // 3일 뒤 날짜
+  const date_after2days = `&Date=${parseInt(after2days)}`; // 2일 뒤 날짜
+  const date_after3days = `&Date=${parseInt(after3days)}`; // 3일 뒤 날짜
 
   const search_info = open_api + service_key + obs_code + date + `&ResultType=json`;
   const search_info_after2days = open_api + service_key + obs_code + date_after2days + `&ResultType=json`;
@@ -103,6 +105,7 @@ const get_tide_info = async (lat, lon) => {
   const today_tide = await axios_tide_info(search_info);
   const after2days_tide = await axios_tide_info(search_info_after2days);
   const after3days_tide = await axios_tide_info(search_info_after3days);
+  console.log('after3days_tide: ', after3days_tide);
 
   const tide = [...today_tide.data, ...after2days_tide.data, ...after3days_tide.data];
 
