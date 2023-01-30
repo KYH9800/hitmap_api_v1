@@ -24,10 +24,11 @@ class UserInfoRepository {
         {
           model: this.postModel,
           attributes: ['post_id'],
-        },
-        {
-          model: this.likeModel,
-          attributes: ['user_id'],
+          include: [
+            {
+              model: this.likeModel,
+            },
+          ],
         },
       ],
     });

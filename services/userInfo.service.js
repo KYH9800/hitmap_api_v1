@@ -17,7 +17,20 @@ const get_my_info = async (user_id) => {
     throw new CustomError('유저 정보가 존재하지 않습니다.', 412);
   }
 
-  return my_info;
+  let likesArr = [];
+  my_info.Posts.map((post) => {
+    return likesArr.push(post.Likes.length);
+  });
+
+  let all_num = 0;
+  likesArr.forEach((num) => {
+    all_num += num;
+  });
+
+  return {
+    my_info: my_info,
+    all_num: all_num,
+  };
 };
 
 // 내 정보 수정
