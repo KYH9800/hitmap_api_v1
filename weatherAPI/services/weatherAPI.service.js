@@ -105,7 +105,6 @@ const get_tide_info = async (lat, lon) => {
   const today_tide = await axios_tide_info(search_info);
   const after2days_tide = await axios_tide_info(search_info_after2days);
   const after3days_tide = await axios_tide_info(search_info_after3days);
-  console.log('after3days_tide: ', after3days_tide);
 
   const tide = [...today_tide.data, ...after2days_tide.data, ...after3days_tide.data];
 
