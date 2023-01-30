@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      this.hasOne(models.UserImage, { foreignKey: 'user_id' });
+      this.hasOne(models.UserImage, { foreignKey: 'user_id', onDelete: 'cascade' });
       this.hasMany(models.Post, { foreignKey: 'user_id' });
       this.hasMany(models.Comment, { foreignKey: 'user_id' });
       this.hasMany(models.Like, { foreignKey: 'user_id' });
