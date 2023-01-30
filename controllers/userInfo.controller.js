@@ -9,13 +9,13 @@ class UserInfoController {
       const user_info = await get_my_info(user_id);
 
       return res.status(200).send({
-        user_id: user_info.user_id,
-        email: user_info.email,
-        nickname: user_info.nickname,
-        my_post_length: user_info.Posts.length,
-        liked_length: user_info.Likes.length,
-        profile_image: user_info.UserImage.src,
-        social: user_info.social,
+        user_id: user_info.my_info.user_id,
+        email: user_info.my_info.email,
+        nickname: user_info.my_info.nickname,
+        my_post_length: user_info.my_info.Posts.length,
+        liked_length: user_info.all_num,
+        profile_image: user_info.my_info.UserImage.src,
+        social: user_info.my_info.social,
       });
     } catch (error) {
       console.log(error);
