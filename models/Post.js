@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     static associate(models) {
       this.hasMany(models.Comment, { foreignKey: 'post_id' });
-      this.hasMany(models.PostImage, { foreignKey: 'post_id' });
+      this.hasMany(models.PostImage, { foreignKey: 'post_id', onDelete: 'cascade' });
       this.hasMany(models.FishInfo, { foreignKey: 'post_id' });
       this.hasMany(models.Like, { foreignKey: 'post_id' });
-      this.belongsTo(models.User, { foreignKey: 'user_id' });
+      this.belongsTo(models.User, { foreignKey: 'user_id', onDelete: 'cascade' });
     }
   }
 
