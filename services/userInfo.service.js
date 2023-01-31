@@ -36,23 +36,30 @@ const get_my_info = async (user_id) => {
 // 내 정보 수정
 const update_user_info = async (user_id, prevPassword, password, passwordConfirm, nickname, image) => {
   const find_user = await userInfoRepository.findUser(user_id);
-  const password_check = await bcrypt.compare(prevPassword, find_user.password);
 
-  if (find_user.social) {
+  if (parseInt(find_user.social)) {
     // 카카오 로그인된 사용자
     await userInfoRepository.updateKakaoUserInfo(user_id, nickname, image);
   } else {
     // 일반 사용자
-    if (!password_check) {
-      throw new CustomError('현재 비밀번호가 일치하지 않습니다.', 412);
-    }
+    if (prevPassword) {
+      if (!password) {
+        throw new CustomError('변경할 비밀번호를 입력해 주세요.', 412);
+      }
+      const password_check = await bcrypt.compare(prevPassword, find_user.password);
 
-    if (password !== passwordConfirm) {
-      throw new CustomError('비밀번호 확인이 일치하지 않습니다.', 412);
-    }
+      if (!password_check) {
+        throw new CustomError('현재 비밀번호가 일치하지 않습니다.', 412);
+      }
 
-    const hashed_password = await bcrypt.hash(password, 12);
-    await userInfoRepository.updateUserInfo(user_id, hashed_password, nickname, image);
+      if (password !== passwordConfirm) {
+        throw new CustomError('비밀번호 확인이 일치하지 않습니다.', 412);
+      }
+      const hashed_password = await bcrypt.hash(password, 12);
+      await userInfoRepository.updateUserInfo(user_id, hashed_password, nickname, image);
+    } else {
+      await userInfoRepository.updateUserInfo(user_id, password, nickname, image);
+    }
   }
 };
 
