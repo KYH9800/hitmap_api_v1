@@ -9,6 +9,7 @@ const axios_weather_info = async (open_weather_API_URL) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then(async (response) => {
+      console.log('response.data.list: ', response.data.list);
       const whether = response.data.list.map((data) => {
         return {
           temp: parseInt(Math.round(data.main.temp) - 273.15),
@@ -37,10 +38,9 @@ const get_weather = async (lat, lon) => {
 
   const index = whether.findIndex((data) => {
     const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
-    const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
+    let now_hour = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
 
-    const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
-    const dd = all_time_info_in_today().DD; // 년-월-일
+    const today = today_func()._today;
 
     const data_yy_mm_dd = data.date.split(' ')[0]; // 데이터의 년-월-일
     let data_time = data.date.split(' ')[1].split(':')[0]; // Hour in 데이터 시간에
@@ -49,13 +49,14 @@ const get_weather = async (lat, lon) => {
       data_time = '24';
     }
 
-    return (
-      (data_yy_mm_dd === yy_mm_dd && now < data_time) ||
-      (parseInt(data_yy_mm_dd.split(' ')[0].split('-')[2]) > parseInt(dd) && now < data_time)
-    );
+    if (now_hour === '00') {
+      now_hour = '24';
+    }
+
+    return today === data_yy_mm_dd && (now_hour < data_time || now_hour === data_time);
   });
 
-  const result = whether.slice(index === 0 ? 0 : index - 1, index === 0 ? index + 15 : index + 16);
+  const result = whether.slice(index, index + 16);
 
   return result.map((data) => {
     return {
@@ -110,21 +111,30 @@ const get_tide_info = async (lat, lon) => {
 
   const index = tide.findIndex((data) => {
     const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
-    const now = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
+    let now_hour = ('0' + yy_mm_dd_hh_mm_ss.split(' ')[1].split(':')[0]).slice(-2); // Hour in 지금 시간
 
-    const yy_mm_dd = all_time_info_in_today().YY_MM_DD; // 년-월-일
-    const dd = all_time_info_in_today().DD; // 년-월-일
+    const today = today_func()._today;
 
     const data_yy_mm_dd = data.tph_time.split(' ')[0]; // 데이터의 년-월-일
-    let data_time = data.tph_time.split(' ')[1].split(':')[0]; // Hour in 데이터 시간
+    let data_time = data.tph_time.split(' ')[1].split(':')[0]; // Hour in 데이터 시간에
 
+    if (data_time === '00') {
+      data_time = '24';
+    }
+
+    if (now_hour === '00') {
+      now_hour = '24';
+    }
+    // return today === data_yy_mm_dd && (now_hour < data_time || now_hour === data_time);
     return (
-      (data_yy_mm_dd === yy_mm_dd && now < data_time) ||
-      parseInt(data_yy_mm_dd.split(' ')[0].split('-')[2]) > parseInt(dd)
+      !(
+        today === data_yy_mm_dd &&
+        (now_hour - data_time === 0 || now_hour - data_time === 1 || now_hour - data_time === 2)
+      ) || today === data_yy_mm_dd
     );
   });
 
-  return tide.slice(index === 0 ? 0 : index - 1, index === 0 ? index + 6 : index + 7);
+  return tide.slice(index, index + 8);
 };
 
 module.exports = {
