@@ -48,10 +48,9 @@ class UserInfoRepository {
   };
 
   // 내 정보 수정
-  updateUserInfo = async (user_id, password, nickname, image) => {
+  updateUserInfo = async (user_id, nickname, image) => {
     await this.userModel.update(
       {
-        password: password,
         nickname: nickname,
       },
       {
@@ -65,6 +64,22 @@ class UserInfoRepository {
       await this.userImageModel.update(
         {
           src: image,
+        },
+        {
+          where: {
+            user_id: user_id,
+          },
+        },
+      );
+    }
+  };
+
+  // 내 비밀번호 수정
+  updateUserPassword = async (user_id, password) => {
+    if (!password) {
+      await this.userModel.update(
+        {
+          password: password,
         },
         {
           where: {

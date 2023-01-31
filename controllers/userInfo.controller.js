@@ -1,4 +1,10 @@
-const { get_my_info, update_user_info, get_my_posts, delete_user_info } = require('../services/userInfo.service');
+const {
+  get_my_info,
+  update_user_info,
+  get_my_posts,
+  delete_user_info,
+  update_user_password,
+} = require('../services/userInfo.service');
 
 class UserInfoController {
   // 내 정보 조회
@@ -36,9 +42,9 @@ class UserInfoController {
     try {
       const user_id = res.locals.user;
       const image = req.file?.location;
-      const { prevPassword, password, passwordConfirm, nickname } = req.body;
+      const { nickname } = req.body;
 
-      await update_user_info(user_id, prevPassword, password, passwordConfirm, nickname, image);
+      await update_user_info(user_id, nickname, image);
 
       return res.status(201).send({
         message: '회원정보 수정 완료',
@@ -53,6 +59,31 @@ class UserInfoController {
       }
       return res.status(400).send({
         errorMessage: '회원정보 수정에 실패하였습니다.',
+      });
+    }
+  };
+
+  // 내 비밀번호 수정
+  updateUserPassword = async (req, res) => {
+    try {
+      const user_id = res.locals.user;
+      const { prevPassword, password, passwordConfirm } = req.body;
+
+      await update_user_password(user_id, prevPassword, password, passwordConfirm);
+
+      return res.status(201).send({
+        message: '비밀번호 수정 완료',
+      });
+    } catch (error) {
+      console.log(error);
+      if (error.message) {
+        return res.status(error.statusCode).send({
+          errorMessage: error.message,
+          status: error.statusCode,
+        });
+      }
+      return res.status(400).send({
+        errorMessage: '비밀번호 수정에 실패하였습니다.',
       });
     }
   };
