@@ -55,7 +55,7 @@ const get_weather = async (lat, lon) => {
     );
   });
 
-  const result = whether.slice(index === 0 ? 0 : index, index === 0 ? index + 15 : index + 15);
+  const result = whether.slice(index === 0 ? 0 : index - 1, index === 0 ? index + 15 : index + 16);
 
   return result.map((data) => {
     return {
