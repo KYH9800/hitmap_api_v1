@@ -12,8 +12,12 @@ function afterDays(afterNum) {
   const targetDay = ('0' + target.getDate()).slice(-2); // 일
 
   const result = `${targetYear}${targetMonth}${targetDay}`;
+  const result2 = `${targetYear}-${targetMonth}-${targetDay}`;
 
-  return result;
+  return {
+    result: result,
+    result2: result2,
+  };
 }
 
 // 오늘 날짜
@@ -21,17 +25,23 @@ const today_func = () => {
   const date = new Date();
   const year = date.getFullYear(); // 년
   const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월
-  const day = date.getDate(); // 일
+  const day = ('0' + date.getDate()).slice(-2); // 일
   const today = `${year}${month}${day}`; // 오늘 날짜
-  const after2days = afterDays(1);
-  const after3days = afterDays(2);
-  console.log('after2days: ', after2days);
-  console.log('after3days: ', after3days);
+  const _today = `${year}-${month}-${day}`; // 오늘 날짜
+
+  const after2days = afterDays(1).result;
+  const after3days = afterDays(2).result;
+
+  const after_2days = afterDays(1).result2;
+  const after_3days = afterDays(2).result2;
 
   return {
     today: today,
+    _today: _today,
     after2days: after2days,
     after3days: after3days,
+    after_2days: after_2days,
+    after_3days: after_3days,
   };
 };
 
