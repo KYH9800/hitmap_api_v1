@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // 고윤혁
+const socketRouter = require('./socket.routes');
+router.use('/message', socketRouter);
+
+// 고윤혁
 const userRouter = require('./user.routes');
 router.use('/user', userRouter);
 
