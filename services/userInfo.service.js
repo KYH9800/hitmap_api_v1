@@ -88,11 +88,19 @@ const delete_user_info = async (user_id, password) => {
 
   if (parseInt(find_user.social)) {
     // 카카오 로그인된 사용자
+    if (password) {
+      throw new CustomError('카카오 로그인은 비밀번호가 필요하지 않습니다.', 412);
+    }
+
     const delete_user = await userInfoRepository.deleteUserInfo(user_id);
 
     return delete_user;
   } else {
     // 일반 사용자
+    if (!password) {
+      throw new CustomError('비밀번호가 입력되지 않았습니다.', 412);
+    }
+
     const password_check = await bcrypt.compare(password, find_user.password);
 
     if (!password_check) {
