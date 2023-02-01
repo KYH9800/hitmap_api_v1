@@ -9,7 +9,6 @@ const axios_weather_info = async (open_weather_API_URL) => {
   const data = await axios
     .get(open_weather_API_URL)
     .then(async (response) => {
-      console.log('response.data.list: ', response.data.list);
       const whether = response.data.list.map((data) => {
         return {
           temp: parseInt(Math.round(data.main.temp) - 273.15),
@@ -35,6 +34,7 @@ const get_weather = async (lat, lon) => {
   const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
 
   const whether = await axios_weather_info(open_weather_API_URL);
+  console.log('whether: ', whether);
 
   const index = whether.findIndex((data) => {
     const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
@@ -53,7 +53,19 @@ const get_weather = async (lat, lon) => {
       now_hour = '24';
     }
 
-    return today === data_yy_mm_dd && (now_hour < data_time || now_hour === data_time);
+    console.log('now_hour: ', now_hour);
+    console.log('data_time: ', data_time);
+    console.log('today: ', today);
+    console.log('data_yy_mm_dd: ', data_yy_mm_dd);
+
+    console.log('today === data_yy_mm_dd: ', today === data_yy_mm_dd);
+    console.log('now_hour < data_time: ', now_hour < data_time);
+    return (
+      (today === data_yy_mm_dd &&
+        (parseInt(now_hour) < parseInt(data_time) || parseInt(now_hour) === parseInt(data_time))) ||
+      (today !== data_yy_mm_dd &&
+        (parseInt(now_hour) < parseInt(data_time) || parseInt(now_hour) === parseInt(data_time)))
+    );
   });
 
   const result = whether.slice(index, index + 17);
