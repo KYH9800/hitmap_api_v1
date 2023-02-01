@@ -7,6 +7,10 @@ const SignupRepository = require('../repositories/signup.repository');
 const signupRepository = new SignupRepository(User, UserImage);
 
 const user_register = async (email, password, passwordConfirm, nickname, image) => {
+  if (!image) {
+    image = 'https://koyunhyeok.shop/userImage/images/user_logo.png';
+  }
+
   if (!email) {
     throw new CustomError('이메일이 입력되지 않았습니다.', 412);
   }
@@ -25,10 +29,6 @@ const user_register = async (email, password, passwordConfirm, nickname, image) 
 
   if (password !== passwordConfirm) {
     throw new CustomError('입력한 비밀번호가 일치하지 않습니다.', 412);
-  }
-
-  if (!image) {
-    image = 'https://koyunhyeok.shop/userImage/images/user_logo.png';
   }
 
   const hashed_password = await bcrypt.hash(password, 12);

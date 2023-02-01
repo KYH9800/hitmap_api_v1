@@ -69,6 +69,14 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/', indexRouter);
 app.use('/userImage', express.static('public'));
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(port, 'port start');
 });
+
+/************************
+ * socket.io connect
+ ************************/
+const roomSocketIO = require('./socket/room');
+roomSocketIO(server, app);
+const chatSocketIO = require('./socket/chat');
+chatSocketIO(server, app);

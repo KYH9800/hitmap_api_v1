@@ -9,7 +9,6 @@ class SignupController {
       const { email, password, passwordConfirm, nickname } = await registerSchema.validateAsync(req.body);
 
       const result = await user_register(email, password, passwordConfirm, nickname, image);
-      console.log('result: ', result);
 
       return res.status(200).send({
         message: '회원가입 성공',
