@@ -56,7 +56,7 @@ const get_weather = async (lat, lon) => {
     return today === data_yy_mm_dd && (now_hour < data_time || now_hour === data_time);
   });
 
-  const result = whether.slice(index, index + 16);
+  const result = whether.slice(index, index + 17);
 
   return result.map((data) => {
     return {
