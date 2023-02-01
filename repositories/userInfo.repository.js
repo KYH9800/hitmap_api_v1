@@ -47,8 +47,8 @@ class UserInfoRepository {
     return find_user;
   };
 
-  // 내 정보 수정
-  updateUserInfo = async (user_id, nickname, image) => {
+  // 내 정보 닉네임 수정
+  updateUserNickname = async (user_id, nickname) => {
     await this.userModel.update(
       {
         nickname: nickname,
@@ -59,54 +59,28 @@ class UserInfoRepository {
         },
       },
     );
+  };
 
-    if (image) {
-      await this.userImageModel.update(
-        {
-          src: image,
+  // 내 정보 이미지 수정
+  updateUserImage = async (user_id, image) => {
+    await this.userImageModel.update(
+      {
+        src: image,
+      },
+      {
+        where: {
+          user_id: user_id,
         },
-        {
-          where: {
-            user_id: user_id,
-          },
-        },
-      );
-    }
+      },
+    );
   };
 
   // 내 비밀번호 수정
   updateUserPassword = async (user_id, password) => {
-    if (!password) {
+    if (password) {
       await this.userModel.update(
         {
           password: password,
-        },
-        {
-          where: {
-            user_id: user_id,
-          },
-        },
-      );
-    }
-  };
-
-  // 카카오 로그인 사용자의 내 정보 수정
-  updateKakaoUserInfo = async (user_id, password, nickname, image) => {
-    await this.userModel.update(
-      {
-        nickname: nickname,
-      },
-      {
-        where: {
-          user_id: user_id,
-        },
-      },
-    );
-
-    if (image) {
-      await this.userImageModel.update(
-        {
-          src: image,
         },
         {
           where: {
