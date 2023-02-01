@@ -27,5 +27,5 @@ module.exports = multer({
       cb(null, `original/${Date.now()}_${newFilename}`);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 },
+  limits: { fileSize: 25 * 1024 * 1024 },
 });
