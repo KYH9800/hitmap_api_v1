@@ -38,6 +38,7 @@ exports.registerSchema = Joi.object().keys({
     'string.max': 'PW BELOW STRING LENGTH 10',
     'string.required': 'NO NICKNAME INPUT',
   }), // 형식: 2자 이상, 영/한글 조합 + 숫자 / 유효성 검사 시 부적절한 언어 체크
+  image: Joi.string(),
 });
 
 // 로그인 JOI 검증
