@@ -16,8 +16,6 @@ module.exports = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
       const filiname = path.basename(file.originalname).trim();
-      let ext = path.extname(file.originalname);
-      ext = '.jpeg';
       let newFilename = '';
       for (let value of filiname) {
         if (value === ' ' || value === '_') {
@@ -26,7 +24,7 @@ module.exports = multer({
         newFilename += value;
       }
 
-      cb(null, `original/${Date.now()}_${newFilename} + ${ext}`);
+      cb(null, `original/${Date.now()}-${newFilename}`);
     },
   }),
   limits: { fileSize: 25 * 1024 * 1024 },
