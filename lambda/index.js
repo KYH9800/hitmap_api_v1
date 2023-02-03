@@ -24,6 +24,7 @@ exports.handler = async (event, context, callback) => {
       .putObject({
         Bucket,
         Key: `thumb/${bcrypt.hash(filename, 6)}`,
+        ContentType: 'image',
         Body: resizedImage,
       })
       .promise();
