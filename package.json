@@ -28,6 +28,7 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2",
+    "socket.io": "^4.5.4",
     "winston": "^3.8.2"
   },
   "devDependencies": {
