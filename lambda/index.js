@@ -7,18 +7,9 @@ exports.handler = async (event, context, callback) => {
   const Bucket = event.Records[0].s3.bucket.name;
   const Key = decodeURIComponent(event.Records[0].s3.object.key);
   let filename = Key.split('/').at(-1);
-
-  let newFilename = '';
-  for (let value of filename) {
-    if (value === ' ' || value === '_') {
-      value = '-';
-    }
-    newFilename += value;
-  }
-
   const ext = Key.split('.').at(-1).toLowerCase();
   const requiredFormat = ext === 'jpg' ? 'jpeg' : ext;
-  console.log('name', newFilename, 'ext', ext);
+  console.log('name', filename, 'ext', ext);
 
   try {
     const s3Object = await s3.getObject({ Bucket, Key }).promise();
@@ -30,13 +21,13 @@ exports.handler = async (event, context, callback) => {
     await s3
       .putObject({
         Bucket,
-        Key: `thumb/${newFilename}`,
+        Key: `thumb/${filename}`,
         ContentType: 'image',
         Body: resizedImage,
       })
       .promise();
     console.log('put', resizedImage.length);
-    return callback(null, `thumb/${newFilename}`);
+    return callback(null, `thumb/${filename}`);
   } catch (error) {
     console.error(error);
     return callback(error);
