@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+// const { Op } = require('sequelize');
 
 class PostRepository {
   constructor(UserModel, UserImageModel, PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
