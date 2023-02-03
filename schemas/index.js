@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 module.exports = () => {
   const connect = () => {
     mongoose.connect(
-      'mongodb://root:dbsgur!@localhost:27017',
+      `${process.env.MONGO_DB_END_POINT}`,
       {
         dbName: 'socketDB',
         useNewUrlParser: true,

@@ -76,7 +76,5 @@ const server = app.listen(port, () => {
 /************************
  * socket.io connect
  ************************/
-const roomSocketIO = require('./socket/room');
-roomSocketIO(server, app);
-const chatSocketIO = require('./socket/chat');
-chatSocketIO(server, app);
+const SocketIO = require('./socket/socket');
+SocketIO(server, app);
