@@ -34,7 +34,6 @@ const get_weather = async (lat, lon) => {
   const open_weather_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=kr&appid=${process.env.OPEN_WEATHER_API_KEYS}`;
 
   const whether = await axios_weather_info(open_weather_API_URL);
-  console.log('whether: ', whether);
 
   const index = whether.findIndex((data) => {
     const yy_mm_dd_hh_mm_ss = all_time_info_in_today().YY_MM_DD_HH_MM_SS; // 지금 시간
@@ -53,13 +52,6 @@ const get_weather = async (lat, lon) => {
       now_hour = '24';
     }
 
-    console.log('now_hour: ', now_hour);
-    console.log('data_time: ', data_time);
-    console.log('today: ', today);
-    console.log('data_yy_mm_dd: ', data_yy_mm_dd);
-
-    console.log('today === data_yy_mm_dd: ', today === data_yy_mm_dd);
-    console.log('now_hour < data_time: ', now_hour < data_time);
     return (
       (today === data_yy_mm_dd &&
         (parseInt(now_hour) < parseInt(data_time) || parseInt(now_hour) === parseInt(data_time))) ||
@@ -86,7 +78,9 @@ const get_weather = async (lat, lon) => {
 // 조석예보 api 요청 함수
 const axios_tide_info = async (url) => {
   const map_data = await axios
-    .get(url)
+    .get(url, {
+      timeout: 60000, //optional
+    })
     .then((res) => {
       return res.data.result;
     })
@@ -104,7 +98,7 @@ const get_tide_info = async (lat, lon) => {
   const after2days = await today_func().after2days;
   const after3days = await today_func().after3days;
 
-  const open_api = 'http://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=';
+  const open_api = 'https://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=';
   const service_key = `${process.env.OPEN_BADANURI_API_KEYS}`;
   const obs_code = `&ObsCode=${obs_post_id}`; // 관측소 번호
   const date = `&Date=${today}`; // 오늘 날짜

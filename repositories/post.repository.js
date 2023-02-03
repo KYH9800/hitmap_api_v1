@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+// const { Op } = require('sequelize');
 
 class PostRepository {
   constructor(UserModel, UserImageModel, PostModel, PostImageModel, FishInfoModel, CommentModel, LikeModel) {
@@ -37,14 +37,14 @@ class PostRepository {
     return createFishInfo;
   };
 
-  findAllPosts = async (user_id, last_id) => {
+  findAllPosts = async (user_id) => { //last_id
     const where = {};
-    if (parseInt(last_id, 10)) {
-      where.post_id = { [Op.lt]: parseInt(last_id, 10) };
-    }
+    // if (parseInt(last_id, 10)) {
+    //   where.post_id = { [Op.lt]: parseInt(last_id, 10) };
+    // }
     const posts = await this.postModel.findAll({
       where,
-      limit: 15,
+      // limit: 15,
       include: [
         {
           model: this.userModel,

@@ -1,17 +1,26 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const {
-  Types: { ObjectId },
-} = Schema;
 
 const chatSchema = new Schema({
-  room: {
-    type: ObjectId,
+  chatId: {
+    type: String,
     required: true,
     ref: 'Room',
   },
-  user: {
+  roomId: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  userImage: {
+    type: String,
+    required: true,
+  },
+  userName: {
     type: String,
     required: true,
   },

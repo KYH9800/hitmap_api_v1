@@ -12,6 +12,9 @@ module.exports = {
       charset: 'utf8mb4',
       dateStrings: true,
       typeCast: true,
+      options: {
+        requestTimeout: 600000,
+      },
     },
   },
   test: {
@@ -25,6 +28,9 @@ module.exports = {
       charset: 'utf8mb4',
       dateStrings: true,
       typeCast: true,
+      options: {
+        requestTimeout: 600000,
+      },
     },
   },
   production: {
@@ -38,6 +44,9 @@ module.exports = {
       charset: 'utf8mb4',
       dateStrings: true,
       typeCast: true,
+      options: {
+        requestTimeout: 600000,
+      },
     },
   },
 };
