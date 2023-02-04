@@ -2,6 +2,28 @@ const Room = require('../schemas/room');
 const Chat = require('../schemas/chat');
 
 class SocketService {
+  createChat = async (roomId, userId, guestId, userImage, userName, message) => {
+    const chat = Chat.create({
+      roomId: roomId,
+      userId: userId,
+      guestId: guestId,
+      userImage: userImage,
+      userName: userName,
+      chat: message,
+    });
+
+    return chat;
+  };
+
+  findAllChat = async (guestId, userId) => {
+    const allChat = Chat.find({
+      guestId: userId,
+      userId: guestId,
+    });
+
+    return allChat;
+  };
+
   createRoom = async (roomId, userId, guestId, userImage, userName, content) => {
     console.log('roomId: ', roomId);
     console.log('userId: ', userId);
@@ -23,14 +45,17 @@ class SocketService {
 
   findMyRooms = async (userId) => {
     const rooms = Room.find({
-      roomId: userId,
+      guestId: userId,
     });
 
     return rooms;
   };
 
-  findRoom = async (roomId) => {
-    const findRoom = Room.find({ roomId: roomId });
+  findRoom = async (userId, guestId) => {
+    const findRoom = Room.find({
+      userId: userId,
+      guestId: guestId,
+    });
 
     return findRoom;
   };
