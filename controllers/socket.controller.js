@@ -2,6 +2,27 @@ const SocketService = require('../services/socket.service');
 const socketService = new SocketService();
 
 class SocketController {
+  createChat = async (req, res) => {
+    const { roomId, userId, userImage, userName, message } = req.body;
+    const chat = await socketService.createChat(roomId, userId, userImage, userName, message);
+
+    return res.status(200).send({
+      message: '채팅 내역 저장',
+      success_data: chat,
+    });
+  };
+
+  findAllChat = async (req, res) => {
+    const { guestId } = req.body;
+    const userId = res.locals.user;
+
+    const findAllChat = await socketService.findAllChat(guestId, userId);
+
+    return res.status(200).send({
+      data: findAllChat,
+    });
+  };
+
   findMyRoom = async (req, res) => {
     const user_id = res.locals.user;
     console.log('userId: ', user_id);

@@ -17,34 +17,26 @@ module.exports = (server) => {
   const room = io.of('/room');
 
   // chat
-  chat.on('connection', (socket) => {
+  chat.on('connection', async (socket) => {
     const req = socket.request;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log(`✔ ${ip} 클라이언트 접속, socket.id : ${socket.id}, req.ip : ${req.ip}`);
 
-    socket.on('join', async (data) => {
-      try {
-        const { roomId } = data;
-
-        socket.emit('guestId', roomId);
-
-        socket.join(roomId);
-      } catch (err) {
-        socket.emit('error', 'join 이벤트 실패');
-      }
-    });
+    const roomId = socket.id;
+    socket.emit('join', roomId);
 
     socket.on('new_message', async (msg) => {
-      const { roomId, userId, guestId, userImage, userName, content } = msg;
+      const { userId, guestId, userImage, userName, content } = msg;
 
-      const findRoom = await socketService.findRoom(roomId);
-      console.log('roomId: ', roomId);
+      const findRoom = await socketService.findRoom(userId, guestId);
 
       if (findRoom.length === 0) {
         await socketService.createRoom(roomId, userId, guestId, userImage, userName, content);
-        await socketService.createRoom(userId, userId, guestId, userImage, userName, content);
       }
 
+      socket.join(roomId);
+
+      await socketService.createChat(roomId, userId, guestId, userImage, userName, content);
       chat.emit('new_message', content);
     });
 
