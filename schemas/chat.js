@@ -3,16 +3,15 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const chatSchema = new Schema({
-  chatId: {
-    type: String,
-    required: true,
-    ref: 'Room',
-  },
   roomId: {
     type: String,
     required: true,
   },
   userId: {
+    type: String,
+    required: true,
+  },
+  guestId: {
     type: String,
     required: true,
   },
