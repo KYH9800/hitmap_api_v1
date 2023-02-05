@@ -20,14 +20,17 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 <br/>
 
 ## 📡도메인 주소
-[HITMAP][https://hitmap-fe.vercel.app/]
+[HITMAP](https://hitmap-fe.vercel.app/)
 <br/>
 
 ## 👩‍👦‍👦팀 구성
 |이름|Position|Role|
 |---|---|---|
-|고윤혁|BE|- 로그인   -회원가입   -...|
-|이규형|BE|- 게시글 CRUD   - 댓글 CRUD|
+|고윤혁|BE|- 로그인   
+-회원가입   
+-...|
+|이규형|BE|- 게시글 CRUD   
+- 댓글 CRUD|
 
 <table>
   <tr>이름</tr>
