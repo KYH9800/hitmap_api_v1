@@ -26,9 +26,9 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 ## 👩‍👦‍👦팀 구성
 |Backend|Frontend|Designer|
 |---|---|---|
-|고윤혁|장세화|이연정|
-|이규형|정창원|
-||조형준|
+|고윤혁 <br> [Github](https://github.com/KYH9800)|장세화 <br> [Github](https://github.com/saehwa95)|이연정|
+|이규형 <br> [Github](https://github.com/kyuhyunglee8)|정창원 <br> [Github](https://github.com/jungjang)|
+||조형준 <br> [Github](https://github.com/cho98)|
 
 <br/>
 
