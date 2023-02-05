@@ -99,7 +99,7 @@ SNS 기능
 <br/>
 
 ## 🖊️코드 컨벤션 Tool
-1. eslint
+### 1. eslint
 ```javascript
 module.exports = {
   // env(사용환경): 어떤 환경에서 스크립트를 실행할 것인지 설정한다. 과제 스프린트에서는 Node.js를 의존하므로 아래와 같이 실행환경을 추가하였다.
@@ -128,7 +128,7 @@ module.exports = {
 - js 문법 에러를 잡기 위함
 - 협업에서 문법 규칙을 통일하기 위해 적용
 
-2. prettier
+### 2. prettier
 ```javascript
 module.exports = {
   tabWidth: 2, // 탭 너비는 2칸으로 지정
