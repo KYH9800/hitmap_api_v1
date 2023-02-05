@@ -51,25 +51,25 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 |라이브러리|설명|
 |---|---|
 |artillery|서버 부하 테스트|
-|axios|HTTP 비동기 통신 라이브러리|
-|bcrypt|비밀번호 암호화|
-|cors|교차 리소스 공유|
-|dotenv|환경변수 관리|
-|helmet|HTTP 헤더 보안|
-|hpp|HTTP 매개변수 보안|
-|jest|테스트 코드|
-|joi|입력데이터 검증|
-|jsonwebtoken|서명 암호화|
-|morgan|HTTP 로그 기록|
-|winston|log 파일 생성|
-|multer|파일 업로드 미들웨어|
-|mysql2|MySQL 드라이버|
-|mongoose|Node ODM|
-|sequelize|Node ORM|
-|socket|실시간 양방향 통신 라이브러리|
-|eslint|정적코드 분석 도구|
-|prettier|코드 스타일 정리 도구|
-|nodemon|코드 변경 시 자동 서버 재시작 Tool|
+|axios 1.2.2|HTTP 비동기 통신 라이브러리|
+|bcrypt 5.1.0|비밀번호 암호화|
+|cors 2.8.5|교차 리소스 공유|
+|dotenv 16.0.3|환경변수 관리|
+|helmet 6.0.1|HTTP 헤더 보안|
+|hpp 0.2.3|HTTP 매개변수 보안|
+|jest 29.3.1|테스트 코드|
+|joi 17.7.0|입력데이터 검증|
+|jsonwebtoken 9.0.0|서명 암호화|
+|morgan 1.10.0|HTTP 로그 기록|
+|winston 3.8.2|log 파일 생성|
+|multer 1.4.5-lts.1|파일 업로드 미들웨어|
+|mysql2 2.3.3|MySQL 드라이버|
+|mongoose 6.9.0|Node ODM|
+|sequelize 6.28.0|Node ORM|
+|socket.io 4.5.4|실시간 양방향 통신 라이브러리|
+|eslint 8.31.0|정적코드 분석 도구|
+|prettier 2.8.1|코드 스타일 정리 도구|
+|nodemon 2.0.20|코드 변경 시 자동 서버 재시작 Tool|
 
 <br/>
 
