@@ -19,6 +19,18 @@
 HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 수 있는 1000만 낚시인들의 꿈의 커뮤니티 웹입니다.   
 <br/>
 
+## 📡도메인 주소
+[HITMAP][https://hitmap-fe.vercel.app/]
+<br/>
+
+## 👩‍👦‍👦팀 구성
+<table>
+  <tr>이름</tr>
+  <tr>Position</tr>
+  <tr>Role</tr>
+</table>
+<br/>
+
 ## 🔧기술스택 (WHY?)
 
 <br/>
