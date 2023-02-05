@@ -26,17 +26,17 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 ## 👩‍👦‍👦팀 구성
 |이름|Position|Role|
 |---|---|---|
-|[고윤혁](https://github.com/KYH9800)|BE|로그인   회원가입   1. 로그인
-2. 로그아웃
-3. 내 정보 CRUD
-4. 로그인 인증
-5. 위도, 경도를 통한 날씨 정보 조회 (풍향, 풍속, 기온, 조석)
-6. 채팅
-7. nginx를 통한 https 적용|
-|[이규형](https://github.com/kyuhyunglee8)|BE|1. 게시글 CRUD
-2. 댓글 CRUD
-3. 좋아요
-4. 이미지 업로드|
+|[고윤혁](https://github.com/KYH9800)|BE|1. 로그인   
+2. 로그아웃   
+3. 내 정보 CRUD   
+4. 로그인 인증   
+5. 위도, 경도를 통한 날씨 정보 조회 (풍향, 풍속, 기온, 조석)   
+6. 채팅   
+7. nginx를 통한 https 적용   |
+|[이규형](https://github.com/kyuhyunglee8)|BE|1. 게시글 CRUD   
+2. 댓글 CRUD   
+3. 좋아요   
+4. 이미지 업로드   |
 
 <br/>
 
