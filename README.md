@@ -36,6 +36,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 <br/>
 
 ## 🤝DB ERD
+<img width="962" alt="스크린샷 2023-02-05 오후 5 32 54" src="https://user-images.githubusercontent.com/115982628/216809340-3663ab38-a9e1-4060-814c-3a320825e4f6.png">
 
 <br/>
 
