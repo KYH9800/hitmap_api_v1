@@ -35,10 +35,37 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 <br/>
 
 ## 🔧기술스택 (WHY?)
+|기술스택|설명|
+|Node.js|자바스크립트 런타임|
+|Express.js|웹 프레임워크|
+|MySQL|RDBMS|
+|MongoDB|DBMS|
+|Nginx|Proxy Server|
 
 <br/>
 
 ## 📘라이브러리 (WHY?)
+|라이브러리|설명|
+|artillery|작성중...|
+|axios|작성중...|
+|bcrypt|작성중...|
+|cors|작성중...|
+|dotenv|작성중...|
+|helmet|작성중...|
+|hpp|작성중...|
+|jest|작성중...|
+|joi|작성중...|
+|jsonwebtoken|작성중...|
+|morgan|작성중...|
+|winston|작성중...|
+|multer|작성중...|
+|mysql2|작성중...|
+|mongoose|작성중...|
+|sequelize|작성중...|
+|socket|작성중...|
+|eslint|작성중...|
+|prettier|작성중...|
+|nodemon|작성중...|
 
 <br/>
 
