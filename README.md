@@ -1,4 +1,4 @@
-# hitmap_api_v1
+# 🐬 hitmap_api_v1
 
 ### 기술스택 (WHY?)
 
