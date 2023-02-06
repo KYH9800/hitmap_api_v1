@@ -148,13 +148,10 @@ module.exports = {
 
 ## ‼️기술적 의사결정 및 트러블 슈팅
 
-<aside>
 ### 🔥  문제
 
 - javascript vs typescript
-</aside>
 
-<aside>
 ### 💭 고민했던 내용
 
 1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민
@@ -166,13 +163,11 @@ module.exports = {
 직접적으로 있지 않아 고민
 </aside>
 
-<aside>
 ### 🗒️ 해결방안
 
 - typescript를 익히는 시간도 고려하여 해당 기간안에는 깊게 다루기는 어렵다 판단
 - js를 더 다루어보고 이후 type 관련 문제에 대해 확인 후 typescript로 리펙토링
 하기로 결정
-</aside>
 
 ---
 
