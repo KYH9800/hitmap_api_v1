@@ -148,9 +148,23 @@ module.exports = {
 
 ## ‼️기술적 의사결정 및 트러블 슈팅
 
-|문제|고민했던 내용|해결방안|
-|---|---|---|
-|javascript vs typescript|1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민 <br> 2. 느슨한 동적 타입의 js 보다 정적언어인 typescript의 장점으로 테스트 코드에서도 <br> 발견되지 않는 타입 관련 문제를 잡아준다는 면에서 사용하기에 이유로 충분함 <br> 3. 갹체지향 프로그래밍을 하는데 있어 추상화를 해야하는데 typescript를 다루는 것이<br> 좋다고 생각함 <br> 4. 프로젝트 규모가 커지면 발생하는 type <br> 에러에 대해 체감하거나 겪은 사례가 <br> 직접적으로 있지 않아 고민|
+<aside>
+🔥  문제
+
+- javascript vs typescript
+</aside>
+
+<aside>
+💭 고민했던 내용
+
+1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민
+2. 느슨한 동적 타입의 js 보다 정적언어인 typescript의 장점으로 테스트 코드에서도
+발견되지 않는 타입 관련 문제를 잡아준다는 면에서 사용하기에 이유로 충분함
+3. 갹체지향 프로그래밍을 하는데 있어 추상화를 해야하는데 typescript를 다루는 것이
+좋다고 생각함
+4. 프로젝트 규모가 커지면 발생하는 type 에러에 대해 체감하거나 겪은 사례가
+직접적으로 있지 않아 고민
+</aside>
 
 <aside>
 🗒️ 해결방안
@@ -160,7 +174,7 @@ module.exports = {
 하기로 결정
 </aside>
 
-### 💥  [3] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -182,7 +196,7 @@ module.exports = {
 프론트 도메인을 설정해줌으로써 문제 해결
 </aside>
 
-### 💥  [1] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -207,6 +221,8 @@ res.cookie('access_token', access_token, { sameSite: 'None', secure: false, http
 res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
 ```
 
+---
+
 <aside>
 🔥  문제
 
@@ -226,7 +242,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 - EC2에 우분투 환경의 시간을 한국 시간과 동일하게 맞춰주면서 해결됨
 </aside>
 
-### 💥  [2] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -249,7 +265,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 - `multer-s3@2.10.0`로 버전을 다운 그레이드 하면서 해결
 </aside>
 
-### 💥  [2] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -275,7 +291,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 그냥 open api를 사용하기로 함
 </aside>
 
-### 💥  [2] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -305,7 +321,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 해당 정보를 제공
 </aside>
 
-### 💥  [2] Back-end ::
+---
 
 <aside>
 🔥  문제
@@ -334,7 +350,7 @@ open api는 5일치를 응답으로 줌
 직접 함수를 작성하여 원하는 형식을 꺼내 사용하여 해결
 </aside>
 
-### 💥  [2] Back-end ::
+---
 
 <aside>
 🔥  문제
