@@ -149,13 +149,13 @@ module.exports = {
 ## ‼️기술적 의사결정 및 트러블 슈팅
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - javascript vs typescript
 </aside>
 
 <aside>
-💭 고민했던 내용
+### 💭 고민했던 내용
 
 1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민
 2. 느슨한 동적 타입의 js 보다 정적언어인 typescript의 장점으로 테스트 코드에서도
@@ -167,7 +167,7 @@ module.exports = {
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - typescript를 익히는 시간도 고려하여 해당 기간안에는 깊게 다루기는 어렵다 판단
 - js를 더 다루어보고 이후 type 관련 문제에 대해 확인 후 typescript로 리펙토링
@@ -177,20 +177,20 @@ module.exports = {
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 배포 시 프론트에서 요청이 거절되는 CORS문제 발생
 </aside>
 
 <aside>
-💭 원인
+### 💭 원인
 
 - 브라우저에서 동일 출처 정책으로 인해 다른 도메인을 신뢰할 수 없어 CORS문제가
 발생한 것으로 확인
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - 서버 측에서 cors 라이브러리를 통해 교차 리소스를 허용할 수 있도록
 프론트 도메인을 설정해줌으로써 문제 해결
@@ -199,18 +199,18 @@ module.exports = {
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 배포 시 서버에서 프론트로 cookie전송이 안되는 현상
 </aside>
 
 <aside>
-💭 원인
+### 💭 원인
 
 - same site가 lax로 적용(default 값)돼있으니 none으로 변경하라는 오류 확인
 </aside>
 
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 ```jsx
 /****************************************************************
@@ -226,20 +226,20 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 배포 후 게시글 GET 요청 시 작성시간과 업데이트 시간이 9시간 느리게 불러와짐
 - DB에는 한국 시간이 정상적으로 저장된 것으로 확인
 </aside>
 
 <aside>
-💭 원인
+### 💭 원인
 
 - 배포된 우분투 환경에서의 시간이 미국 시간으로 설정되어 있었다.
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - EC2에 우분투 환경의 시간을 한국 시간과 동일하게 맞춰주면서 해결됨
 </aside>
@@ -247,7 +247,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - multer-s3를 통해 AWS에 이미지를 저장하는데 있어 아래의 에러가 발생
 
@@ -256,13 +256,13 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 </aside>
 
 <aside>
-💭 원인
+### 💭 원인
 
 - version issue로 인해 발생되는 문제로 확인함
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - `multer-s3@2.10.0`로 버전을 다운 그레이드 하면서 해결
 </aside>
@@ -270,14 +270,14 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 사용자에게 제공해야 하는 날씨 정보와 조석 예보를 open api를 통해 받아와야함
 하지만 open api를 다루는데 있어 하루 요청 횟수가 제한이 있는 것으로 파악
 </aside>
 
 <aside>
-💭 고민했던 내용
+### 💭 고민했던 내용
 
 1. 당일 날짜로 받아오는 요청들을 DB에 저장하면 요청 제한 횟수에 걸리지 않을 것이라
 판단
@@ -287,7 +287,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - 실전 프로젝트에 있어서 상업적인 목적은 없어 제한 있는 부분을 감수하고
 그냥 open api를 사용하기로 함
@@ -296,7 +296,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 사용자에게 제공되어야 할 조석예보는 날씨와 다르게 위도, 경도로 찾는 것이 아닌
 관측소 이름으로 정보를 받아와야 함
@@ -304,7 +304,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 </aside>
 
 <aside>
-💭 고민했던 내용
+### 💭 고민했던 내용
 
 1. 단순히 해양정보 관련 open api에서 조석예보를 제공해주는 곳이 더 있는지 구글링
 하는 방법
@@ -316,7 +316,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - 조석 예보를 제공하는 open api를 1개 밖에 찾지 못함.
 - 위도, 경도를 통해 사용자의 위치로부터 가장 가가운 관측소의 위치를 찾아와
@@ -326,7 +326,7 @@ res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, ht
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - 날씨 및 조석예보를 현재 날짜 기준 2일 후까지 3시간 간격으로 제공하기로 하였으나
 open api는 5일치를 응답으로 줌
@@ -334,7 +334,7 @@ open api는 5일치를 응답으로 줌
 </aside>
 
 <aside>
-💭 고민했던 내용
+### 💭 고민했던 내용
 
 1. 날짜를 통해 제공된 데이터를 순회하면서 현재날짜의 데이터가 있는 첫번째 index를
 찾아 원하는 2일 후의 데이터 부분까지 배열을 자른다.
@@ -345,7 +345,7 @@ open api는 5일치를 응답으로 줌
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - moment가 비교적 무겁다는 이슈를 알고 있고 겪어본 경험이 있기에 dayjs를
 사용하려 했으나, 라이브러리를 사용하지 않아도 직접 구현할 수 있을 것이라 판단되어
@@ -355,14 +355,14 @@ open api는 5일치를 응답으로 줌
 ---
 
 <aside>
-🔥  문제
+### 🔥  문제
 
 - DB를 다루는데 있어 Node의 ORM을 사용할 것인가
 - Raw query를 직접 사용할 것인가?
 </aside>
 
 <aside>
-💭 고민했던 내용
+### 💭 고민했던 내용
 
 1. Row Query를 익혀서 직접 Query를 작성하는데는 시간적 여유가 없다 판단
 2. 실전 프로젝트 기간 동안 생산성을 위해 ORM을 다루는 방향으로 선택
@@ -372,7 +372,7 @@ open api는 5일치를 응답으로 줌
 </aside>
 
 <aside>
-🗒️ 해결방안
+### 🗒️ 해결방안
 
 - typeORM과 knex의 문법이 Row Query와 가까운 것을 확인하여 사용하고자하나
 생산성을 위해 sequelize를 사용하기로 함
