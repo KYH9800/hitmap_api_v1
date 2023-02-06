@@ -74,7 +74,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 <br/>
 
 ## ⚙️아키텍쳐
-![image](https://user-images.githubusercontent.com/61128538/216824438-d0cf7c6c-c485-4d74-a526-e5f87e3cf630.png)
+![image](![image](https://user-images.githubusercontent.com/61128538/216909426-321f0704-699b-4f4f-878e-443bc436627b.png))
 
 <br/>
 
