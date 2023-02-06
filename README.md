@@ -147,7 +147,7 @@ module.exports = {
 <br/>
 
 ## ‼️기술적 의사결정 및 트러블 슈팅
-
+|기술적 의사결정 및 트러블 슈팅|
 |---|
 |문제|
 |javascript vs typescript|
