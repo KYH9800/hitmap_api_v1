@@ -47,7 +47,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 
 <br/>
 
-## 📘라이브러리 (WHY?)
+## 📘라이브러리 ([WHY?](https://planet-aletopelta-fbc.notion.site/WHY-98acfae49170476ab7056a9cd49e7a04))
 |라이브러리|설명|
 |---|---|
 |artillery 2.0.0-28|서버 부하 테스트|
