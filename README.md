@@ -147,25 +147,11 @@ module.exports = {
 <br/>
 
 ## ‼️기술적 의사결정 및 트러블 슈팅
-### 💥  [2] Back-end ::
 
-<aside>
-🔥  문제
-
-- javascript vs typescript
-</aside>
-
-<aside>
-💭 고민했던 내용
-
-1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민
-2. 느슨한 동적 타입의 js 보다 정적언어인 typescript의 장점으로 테스트 코드에서도
-발견되지 않는 타입 관련 문제를 잡아준다는 면에서 사용하기에 이유로 충분함
-3. 갹체지향 프로그래밍을 하는데 있어 추상화를 해야하는데 typescript를 다루는 것이
-좋다고 생각함
-4. 프로젝트 규모가 커지면 발생하는 type 에러에 대해 체감하거나 겪은 사례가
-직접적으로 있지 않아 고민
-</aside>
+|문제|고민했던 내용|해결방안|
+|---|---|---|
+|javascript vs typescript|
+1. 사실 많이들 typescript를 사용한다 하여 적용할 것인가를 고민 <br> 2. 느슨한 동적 타입의 js 보다 정적언어인 typescript의 장점으로 테스트 코드에서도 <br> 발견되지 않는 타입 관련 문제를 잡아준다는 면에서 사용하기에 이유로 충분함 <br> 3. 갹체지향 프로그래밍을 하는데 있어 추상화를 해야하는데 typescript를 다루는 것이<br> 좋다고 생각함 <br> 4. 프로젝트 규모가 커지면 발생하는 type <br> 에러에 대해 체감하거나 겪은 사례가 <br> 직접적으로 있지 않아 고민|
 
 <aside>
 🗒️ 해결방안
@@ -221,8 +207,6 @@ module.exports = {
 res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
 res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
 ```
-
-### 💥  [2] Back-end ::
 
 <aside>
 🔥  문제
