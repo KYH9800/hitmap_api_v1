@@ -36,7 +36,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 
 <br/>
 
-## 🔧기술스택 (WHY?)
+## 🔧기술스택 ([WHY?](https://planet-aletopelta-fbc.notion.site/WHY-126db79f4099426fabd1ed1fb2f916f8))
 |기술스택|설명|
 |---|---|
 |Node.js|자바스크립트 런타임|
