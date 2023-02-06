@@ -154,7 +154,7 @@ module.exports = {
 <br/>
 
 ## ‼️트러블 슈팅
-[노션 페이지에 작성](https://planet-aletopelta-fbc.notion.site/HITMAP-503cda61b7cf4faa99576c7ff5fba6ab)
+[노션 페이지에 작성](https://planet-aletopelta-fbc.notion.site/c708b97a821649adb7e3706d9bfd2e3b)
 |어떤 문제가 있었는가?|
 |---|
 |원인은 무엇인가?|
