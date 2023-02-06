@@ -14,8 +14,8 @@ class LoginController {
       const { access_token, refresh_token, nickname } = await user_login(email, password);
 
       if (process.env.NODE_ENV === 'production') {
-        res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
-        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
+        res.cookie('access_token', access_token, { sameSite: 'None', secure: true, httpOnly: true });
+        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: true, httpOnly: true });
       } else {
         res.cookie('access_token', access_token);
         res.cookie('refresh_token', refresh_token);
@@ -76,8 +76,8 @@ class LoginController {
       const { access_token, refresh_token, nickname } = await make_token_after_check_user_info(user_data);
 
       if (process.env.NODE_ENV === 'production') {
-        res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
-        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
+        res.cookie('access_token', access_token, { sameSite: 'None', secure: true, httpOnly: true });
+        res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: true, httpOnly: true });
       } else {
         res.cookie('access_token', access_token);
         res.cookie('refresh_token', refresh_token);
