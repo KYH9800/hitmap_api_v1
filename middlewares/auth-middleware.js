@@ -66,7 +66,13 @@ const is_logged_in_refresh_token = async (req, res, next) => {
         },
       );
       res.locals.user = refresh_token_invalid.user_id;
-      res.cookie('access_token', new_access_token);
+
+      if (process.env.NODE_ENV === 'production') {
+        res.cookie('access_token', new_access_token, { sameSite: 'None', secure: true, httpOnly: true });
+      } else {
+        res.cookie('access_token', new_access_token);
+      }
+
       throw new CustomError('access-token이 만료되어 재발급합니다.', 419);
     } else {
       const user_information = await User.findOne({
