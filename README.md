@@ -210,6 +210,8 @@ module.exports = {
 - same site가 lax로 적용(default 값)돼있으니 none으로 변경하라는 오류 확인
 </aside>
 
+🗒️ 해결방안
+
 ```jsx
 /****************************************************************
 1. Cookie 정책에서 sameSite는 false 값을 준다.
@@ -220,7 +222,7 @@ module.exports = {
 res.cookie('access_token', access_token, { sameSite: 'None', secure: false, httpOnly: true });
 res.cookie('refresh_token', refresh_token, { sameSite: 'None', secure: false, httpOnly: true });
 ```
-
+  
 ---
 
 <aside>
