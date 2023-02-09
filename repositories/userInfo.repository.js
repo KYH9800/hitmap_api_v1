@@ -65,7 +65,7 @@ class UserInfoRepository {
   updateUserImage = async (user_id, image) => {
     await this.userImageModel.update(
       {
-        src: image,
+        src: image.replace(/\/original\//, '/thumb/'),
       },
       {
         where: {
