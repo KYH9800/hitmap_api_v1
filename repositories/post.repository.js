@@ -24,7 +24,7 @@ class PostRepository {
     const images = src.map(
       async (image) =>
         await this.postImageModel.create({
-          src: image.location.replace(/\/thumb\//, '/original/'),
+          src: image.location.replace(/\/original\//, '/thumb/'),
           post_id,
         }),
     );
