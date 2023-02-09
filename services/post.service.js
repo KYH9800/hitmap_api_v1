@@ -46,8 +46,8 @@ const find_all_posts = async (user_id, last_id) => {
 
       return {
         post_id: post.post_id,
-        resizing_post_image: post.PostImages[0].src.replace(/\/thumb\//, '/original/'),
-        original_post_image: post.PostImages,
+        resizing_post_image: post.PostImages,
+        original_post_image: post.PostImages[0].src.replace(/\/thumb\//, '/original/'),
         content: post.content,
         fishName: post.FishInfos[0].fish_name,
         like_count: post.Likes.length,
