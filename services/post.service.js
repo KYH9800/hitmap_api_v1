@@ -124,6 +124,9 @@ const update_post = async (user_id, post_id, content, fish_name) => {
   if (user_id !== post.user_id) {
     throw { errorMessage: '본인이 작성한 게시글만 수정이 가능합니다.', code: 401 };
   }
+  if (!fish_name) {
+    throw { errorMessage: '물고기에 대한 정보가 없습니다.', code: 412 };
+  }
 
   const updatePost = await postRepository.updatePost(post_id, content);
   await postRepository.updateFishInfo(post_id, fish_name);
