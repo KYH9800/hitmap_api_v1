@@ -21,6 +21,8 @@ class UserInfoController {
         my_post_length: user_info.my_info.Posts.length,
         liked_length: user_info.all_num,
         profile_image: user_info.my_info.UserImage.src,
+        resizing_user_profile_image: user_info.my_info.UserImage.src,
+        original_user_profile_image: user_info.my_info.UserImage.src.replace(/\/thumb\//, '/original/'),
         social: user_info.my_info.social,
       });
     } catch (error) {
