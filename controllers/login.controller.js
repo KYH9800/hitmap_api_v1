@@ -5,6 +5,8 @@ const {
   make_token_after_check_user_info,
 } = require('../services/kakao_login.service');
 
+const logger = require('../config/loggers');
+
 class LoginController {
   // 일반 로그인
   login = async (req, res) => {
@@ -28,7 +30,7 @@ class LoginController {
         nickname: nickname,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -51,7 +53,7 @@ class LoginController {
         message: '로그아웃 완료',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -90,6 +92,7 @@ class LoginController {
         nickname: nickname,
       });
     } catch (error) {
+      logger.error(error.message || error);
       if (error.message) {
         console.log('error: ', error);
         return res.status(error.statusCode).send({
