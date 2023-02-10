@@ -1,7 +1,8 @@
 ### Node ###
 # Dependency directories
 node_modules/
-
+logs
+*.log
 # dotenv environment variable files
 .env
 

@@ -6,6 +6,8 @@ const {
   update_user_password,
 } = require('../services/userInfo.service');
 
+const logger = require('../config/loggers');
+
 class UserInfoController {
   // 내 정보 조회
   getMyInfo = async (req, res) => {
@@ -26,7 +28,7 @@ class UserInfoController {
         social: user_info.my_info.social,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -52,7 +54,7 @@ class UserInfoController {
         message: '회원정보 수정 완료',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -77,7 +79,7 @@ class UserInfoController {
         message: '비밀번호 수정 완료',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -102,7 +104,7 @@ class UserInfoController {
         Posts: my_posts.Posts,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -133,7 +135,7 @@ class UserInfoController {
         result: delete_user,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,

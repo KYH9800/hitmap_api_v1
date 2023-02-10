@@ -2,6 +2,8 @@ const { check_user_email, check_user_nickname } = require('../services/check.ser
 
 const { aleadyEmailSchema, aleadyNicknameSchema } = require('../validations/user.validation');
 
+const logger = require('../config/loggers');
+
 class CheckController {
   findByEmail = async (req, res) => {
     try {
@@ -13,7 +15,7 @@ class CheckController {
         message: '사용 가능한 이메일 입니다.',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,
@@ -36,7 +38,7 @@ class CheckController {
         message: '사용 가능한 닉네임 입니다.',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,

@@ -1,5 +1,7 @@
 const { create_follow } = require('../services/follow.service');
 
+const logger = require('../config/loggers');
+
 class FollowController {
   createFollow = async (req, res) => {
     try {
@@ -10,7 +12,7 @@ class FollowController {
 
       res.status(200).json({ follow });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
