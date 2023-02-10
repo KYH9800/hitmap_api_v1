@@ -2,6 +2,8 @@ const { user_register } = require('../services/signup.service');
 
 const { registerSchema } = require('../validations/user.validation');
 
+const logger = require('../config/loggers');
+
 class SignupController {
   signup = async (req, res) => {
     try {
@@ -15,7 +17,7 @@ class SignupController {
         user_data: result,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.message) {
         return res.status(error.statusCode).send({
           errorMessage: error.message,

@@ -7,6 +7,8 @@ const {
   like_post,
 } = require('../services/post.service');
 
+const logger = require('../config/loggers');
+
 class PostController {
   createPost = async (req, res) => {
     try {
@@ -18,7 +20,7 @@ class PostController {
 
       res.status(201).json({ message: '게시글 작성 성공' });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
@@ -35,6 +37,7 @@ class PostController {
 
       res.status(200).json({ posts });
     } catch (error) {
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
@@ -52,6 +55,7 @@ class PostController {
 
       res.status(200).json({ post });
     } catch (error) {
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
@@ -69,6 +73,7 @@ class PostController {
 
       res.status(204).json({ message: '게시글 삭제에 성공했습니다.' });
     } catch (error) {
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
@@ -87,6 +92,7 @@ class PostController {
 
       res.status(201).json({ message: '게시글 수정에 성공하였습니다.' });
     } catch (error) {
+      logger.error(error.message || error);
       if (error.code) {
         return res.status(error.code).json({ errorMessage: error.errorMessage });
       } else {
